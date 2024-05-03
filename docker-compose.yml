@@ -1,0 +1,36 @@
+services:
+  postgres:
+    container_name: postgres-db-hr-forge
+    image: postgres
+    environment:
+      POSTGRES_USER_FILE: /run/secrets/db_user
+      POSTGRES_PASSWORD_FILE: /run/secrets/db_password
+      PGDATA: /var/lib/postgresql/data
+      POSTGRES_DB_FILE: /run/secrets/db_name
+    secrets:
+      - db_user
+      - db_password
+      - db_name
+    volumes:
+      - postgres:/data/postgres
+    ports:
+      - 5433:5432
+    networks:
+      - hr-forge-network
+    restart: unless-stopped
+
+networks:
+  hr-forge-network:
+    driver: bridge
+
+volumes:
+  postgres:
+    driver: local
+
+secrets:
+  db_user:
+    file: ./secrets/db_user.txt
+  db_password:
+    file: ./secrets/db_password.txt
+  db_name:
+    file: ./secrets/db_name.txt
