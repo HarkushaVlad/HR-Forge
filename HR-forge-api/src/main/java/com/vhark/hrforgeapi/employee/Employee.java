@@ -1,10 +1,12 @@
 package com.vhark.hrforgeapi.employee;
 
+import com.vhark.hrforgeapi.department.Department;
 import com.vhark.hrforgeapi.position.Position;
 import jakarta.persistence.*;
 import java.security.Principal;
 import java.time.LocalDateTime;
 import java.util.Collection;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 import lombok.*;
@@ -26,9 +28,15 @@ public class Employee implements UserDetails, Principal {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
-  private Long id;
+  private Long employeeId;
 
-  private Long departmentId;
+  @ManyToOne
+  @JoinColumn(name = "department_id", nullable = false)
+  private Department department;
+
+  @ManyToOne
+  @JoinColumn(name = "position_id", nullable = false)
+  private Position position;
 
   private String firstName;
 
@@ -39,7 +47,7 @@ public class Employee implements UserDetails, Principal {
   @Column(unique = true)
   private String email;
 
-  private String password;
+  private String passwordHash;
 
   private Double salary;
 
@@ -48,12 +56,6 @@ public class Employee implements UserDetails, Principal {
   private boolean accountLocked;
 
   private boolean enabled;
-
-  @ManyToMany(fetch = FetchType.EAGER)
-  private List<Position> positions;
-
-  @OneToMany(mappedBy = "employee")
-  private List<Token> tokens;
 
   @CreatedDate
   @Column(nullable = false, updatable = false)
@@ -70,12 +72,12 @@ public class Employee implements UserDetails, Principal {
 
   @Override
   public Collection<? extends GrantedAuthority> getAuthorities() {
-    return this.positions.stream().map(pos -> new SimpleGrantedAuthority(pos.getName())).toList();
+    return Collections.singletonList(new SimpleGrantedAuthority(position.getName()));
   }
 
   @Override
   public String getPassword() {
-    return password;
+    return passwordHash;
   }
 
   @Override
@@ -103,7 +105,7 @@ public class Employee implements UserDetails, Principal {
     return enabled;
   }
 
-  private String getFullName() {
+  public String getFullName() {
     return firstName + " " + lastName;
   }
 }

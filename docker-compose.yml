@@ -14,7 +14,7 @@ services:
     volumes:
       - postgres:/data/postgres
     ports:
-      - 5433:5432
+      - 5430:5432
     networks:
       - hr-forge-network
     restart: unless-stopped
