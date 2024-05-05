@@ -7,17 +7,21 @@ import org.springframework.http.HttpStatus;
 
 @Getter
 public enum ErrorCodes {
-  NO_CODE(0, NOT_IMPLEMENTED, "No code"),
-  INCORRECT_CURRENT_PASSWORD(300, BAD_REQUEST, "Current password is incorrect"),
-  NEW_PASSWORD_DOES_NOT_MATCH(301, BAD_REQUEST, "The new password does not match"),
-  BAD_CREDENTIALS(303, FORBIDDEN, "Login and / or password is incorrect");
+  NO_CODE(NOT_IMPLEMENTED, "No code"),
+  INCORRECT_CURRENT_PASSWORD(BAD_REQUEST, "Current password is incorrect"),
+  NEW_PASSWORD_DOES_NOT_MATCH(BAD_REQUEST, "The new password does not match"),
+  BAD_CREDENTIALS(FORBIDDEN, "Login and / or password is incorrect"),
+  EMPLOYEE_NOT_FOUND(HttpStatus.NOT_FOUND, "Employee not found"),
+  EMAIL_ALREADY_IN_USE(HttpStatus.BAD_REQUEST, "Email already in use"),
+  POSITION_NOT_FOUND(HttpStatus.NOT_FOUND, "Position not found"),
+  POSITION_NAME_IN_USE(HttpStatus.BAD_REQUEST, "Position name already in use"),
+  DEPARTMENT_NOT_FOUND(HttpStatus.NOT_FOUND, "Department not found"),
+  DEPARTMENT_NAME_IN_USE(HttpStatus.BAD_REQUEST, "Department name already in use");
 
-  private final int code;
   private final String description;
   private final HttpStatus httpStatus;
 
-  ErrorCodes(int code, HttpStatus httpStatus, String description) {
-    this.code = code;
+  ErrorCodes(HttpStatus httpStatus, String description) {
     this.description = description;
     this.httpStatus = httpStatus;
   }

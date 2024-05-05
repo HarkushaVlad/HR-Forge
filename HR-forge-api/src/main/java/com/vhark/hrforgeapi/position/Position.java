@@ -29,7 +29,7 @@ public class Position {
 
   private String description;
 
-  @OneToMany(mappedBy = "position")
+  @OneToMany(mappedBy = "position", cascade = CascadeType.DETACH)
   @JsonIgnore
   private List<Employee> employees;
 

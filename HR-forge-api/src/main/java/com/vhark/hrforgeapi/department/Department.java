@@ -28,7 +28,7 @@ public class Department {
 
   private String description;
 
-  @OneToMany(mappedBy = "department")
+  @OneToMany(mappedBy = "department", cascade = CascadeType.DETACH)
   @JsonIgnore
   private List<Employee> employees;
 

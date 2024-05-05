@@ -31,11 +31,11 @@ public class Employee implements UserDetails, Principal {
   private Long employeeId;
 
   @ManyToOne
-  @JoinColumn(name = "department_id", nullable = false)
+  @JoinColumn(name = "department_id")
   private Department department;
 
   @ManyToOne
-  @JoinColumn(name = "position_id", nullable = false)
+  @JoinColumn(name = "position_id")
   private Position position;
 
   private String firstName;

@@ -19,6 +19,6 @@ public class UserDetailsService implements org.springframework.security.core.use
     return employeeRepository
         .findByEmail(username)
         .orElseThrow(
-            () -> new UsernameNotFoundException("User not found with username: " + username));
+            () -> new UsernameNotFoundException("Employee not found with email: " + username));
   }
 }

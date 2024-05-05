@@ -1,11 +1,11 @@
 package com.vhark.hrforgeapi.auth;
 
 import com.vhark.hrforgeapi.department.Department;
-import com.vhark.hrforgeapi.department.DepartmentRepository;
+import com.vhark.hrforgeapi.department.DepartmentService;
 import com.vhark.hrforgeapi.employee.Employee;
-import com.vhark.hrforgeapi.employee.EmployeeRepository;
+import com.vhark.hrforgeapi.employee.EmployeeService;
 import com.vhark.hrforgeapi.position.Position;
-import com.vhark.hrforgeapi.position.PositionRepository;
+import com.vhark.hrforgeapi.position.PositionService;
 import com.vhark.hrforgeapi.security.JwtService;
 import java.util.HashMap;
 import lombok.RequiredArgsConstructor;
@@ -18,29 +18,18 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class AuthenticationService {
 
-  private final PositionRepository positionRepository;
-  private final DepartmentRepository departmentRepository;
-  private final EmployeeRepository employeeRepository;
   private final AuthenticationManager authenticationManager;
   private final PasswordEncoder passwordEncoder;
   private final JwtService jwtService;
+  private final EmployeeService employeeService;
+  private final PositionService positionService;
+  private final DepartmentService departmentService;
 
   public void register(RegistrationRequest request) {
-    Position employeePosition =
-        positionRepository
-            .findByName(request.getPositionName())
-            .orElseThrow(
-                () ->
-                    new IllegalArgumentException(
-                        "Position not found: " + request.getPositionName()));
+    Position employeePosition = positionService.findByPositionName(request.getPositionName());
 
     Department employeeDepartment =
-        departmentRepository
-            .findByName(request.getDepartmentName())
-            .orElseThrow(
-                () ->
-                    new IllegalArgumentException(
-                        "Department not found: " + request.getDepartmentName()));
+        departmentService.findByDepartmentName(request.getDepartmentName());
 
     Employee employee =
         Employee.builder()
@@ -57,7 +46,7 @@ public class AuthenticationService {
             .enabled(true)
             .build();
 
-    employeeRepository.save(employee);
+    employeeService.create(employee);
   }
 
   public AuthenticationResponse authenticate(AuthenticationRequest request) {
