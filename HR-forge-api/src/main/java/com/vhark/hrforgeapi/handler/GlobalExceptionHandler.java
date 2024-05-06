@@ -5,6 +5,7 @@ import static org.springframework.http.HttpStatus.*;
 
 import com.vhark.hrforgeapi.department.exceptions.DepartmentNameIsAlreadyInUseException;
 import com.vhark.hrforgeapi.department.exceptions.DepartmentNotFoundException;
+import com.vhark.hrforgeapi.department.exceptions.InvalidDepartmentIdException;
 import com.vhark.hrforgeapi.employee.exceptions.EmailIsAlreadyInUseException;
 import com.vhark.hrforgeapi.employee.exceptions.EmployeeNotFoundException;
 import com.vhark.hrforgeapi.employee.exceptions.InvalidEmployeeIdException;
@@ -123,6 +124,16 @@ public class GlobalExceptionHandler {
         .body(
             ExceptionResponse.builder()
                 .errorDescription(INVALID_POSITION_ID.getDescription())
+                .error(ex.getMessage())
+                .build());
+  }
+
+  @ExceptionHandler(InvalidDepartmentIdException.class)
+  public ResponseEntity<ExceptionResponse> handleException(InvalidDepartmentIdException ex) {
+    return ResponseEntity.status(INVALID_DEPARTMENT_ID.getHttpStatus())
+        .body(
+            ExceptionResponse.builder()
+                .errorDescription(INVALID_DEPARTMENT_ID.getDescription())
                 .error(ex.getMessage())
                 .build());
   }

@@ -18,7 +18,8 @@ public enum ErrorCodes {
   DEPARTMENT_NOT_FOUND(NOT_FOUND, "Department not found"),
   DEPARTMENT_NAME_IN_USE(BAD_REQUEST, "Department name already in use"),
   INVALID_EMPLOYEE_ID(BAD_REQUEST, "Employee ID is invalid"),
-  INVALID_POSITION_ID(BAD_REQUEST, "Position ID is invalid");
+  INVALID_POSITION_ID(BAD_REQUEST, "Position ID is invalid"),
+  INVALID_DEPARTMENT_ID(BAD_REQUEST, "Department ID is invalid");
 
   private final String description;
   private final HttpStatus httpStatus;

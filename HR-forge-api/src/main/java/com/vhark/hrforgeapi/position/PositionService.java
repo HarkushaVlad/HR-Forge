@@ -1,6 +1,6 @@
 package com.vhark.hrforgeapi.position;
 
-import com.vhark.hrforgeapi.employee.exceptions.EmailIsAlreadyInUseException;
+import com.vhark.hrforgeapi.position.exceptions.PositionNameIsAlreadyInUseException;
 import com.vhark.hrforgeapi.position.exceptions.PositionNotFoundException;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
@@ -72,14 +72,14 @@ public class PositionService {
 
   private void checkPositionNameIsFree(String positionName) {
     if (positionRepository.findByName(positionName).isPresent()) {
-      throw new EmailIsAlreadyInUseException(positionName);
+      throw new PositionNameIsAlreadyInUseException(positionName);
     }
   }
 
   private void checkPositionNameIsFree(String positionName, Long ownerId) {
     Optional<Position> position = positionRepository.findByName(positionName);
     if (position.isPresent() && !position.get().getPositionId().equals(ownerId)) {
-      throw new EmailIsAlreadyInUseException(positionName);
+      throw new PositionNameIsAlreadyInUseException(positionName);
     }
   }
 }

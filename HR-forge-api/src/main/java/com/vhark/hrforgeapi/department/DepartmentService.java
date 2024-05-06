@@ -1,8 +1,10 @@
 package com.vhark.hrforgeapi.department;
 
+import com.vhark.hrforgeapi.department.exceptions.DepartmentNameIsAlreadyInUseException;
 import com.vhark.hrforgeapi.department.exceptions.DepartmentNotFoundException;
-import com.vhark.hrforgeapi.employee.exceptions.EmailIsAlreadyInUseException;
+import java.util.Optional;
 import lombok.RequiredArgsConstructor;
+import org.modelmapper.ModelMapper;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -10,19 +12,46 @@ import org.springframework.stereotype.Service;
 public class DepartmentService {
 
   private final DepartmentRepository departmentRepository;
+  private final ModelMapper modelMapper;
 
-  public Department findById(long id) {
-    return departmentRepository.findById(id).orElseThrow(() -> new DepartmentNotFoundException(id));
+  public DepartmentResponse findById(long id) {
+    Department department =
+        departmentRepository.findById(id).orElseThrow(() -> new DepartmentNotFoundException(id));
+    return modelMapper.map(department, DepartmentResponse.class);
   }
 
-  public Department findByDepartmentName(String departmentName) {
-    return departmentRepository
-        .findByName(departmentName)
-        .orElseThrow(() -> new DepartmentNotFoundException(departmentName));
+  public DepartmentResponse findByName(String departmentName) {
+    Department department =
+        departmentRepository
+            .findByName(departmentName)
+            .orElseThrow(() -> new DepartmentNotFoundException(departmentName));
+    return modelMapper.map(department, DepartmentResponse.class);
   }
 
-  public Department update(Long id, Department department) {
-    checkDepartmentExistsById(id);
+  public void create(DepartmentRequest departmentRequest) {
+    checkDepartmentNameIsFree(departmentRequest.getName());
+    Department department = modelMapper.map(departmentRequest, Department.class);
+    department.setDepartmentId(null);
+    departmentRepository.save(department);
+  }
+
+  public Department update(Long id, DepartmentRequest departmentRequest) {
+    checkDepartmentNameIsFree(departmentRequest.getName(), id);
+    Department department =
+        departmentRepository.findById(id).orElseThrow(() -> new DepartmentNotFoundException(id));
+    Department updatedDepartment = modelMapper.map(departmentRequest, Department.class);
+    updatedDepartment.setDepartmentId(id);
+    return departmentRepository.save(department);
+  }
+
+  public Department update(String departmentName, DepartmentRequest departmentRequest) {
+    Department department =
+        departmentRepository
+            .findByName(departmentName)
+            .orElseThrow(() -> new DepartmentNotFoundException(departmentName));
+    checkDepartmentNameIsFree(departmentRequest.getName(), department.getDepartmentId());
+    Department updatedDepartment = modelMapper.map(departmentRequest, Department.class);
+    updatedDepartment.setDepartmentId(department.getDepartmentId());
     return departmentRepository.save(department);
   }
 
@@ -31,13 +60,28 @@ public class DepartmentService {
     departmentRepository.deleteById(id);
   }
 
+  public void deleteByName(String name) {
+    Department department =
+        departmentRepository
+            .findByName(name)
+            .orElseThrow(() -> new DepartmentNotFoundException(name));
+    departmentRepository.deleteById(department.getDepartmentId());
+  }
+
   private void checkDepartmentExistsById(Long id) {
     departmentRepository.findById(id).orElseThrow(() -> new DepartmentNotFoundException(id));
   }
 
-  public void checkDepartmentNameIsFree(String departmentName) {
+  private void checkDepartmentNameIsFree(String departmentName) {
     if (departmentRepository.findByName(departmentName).isPresent()) {
-      throw new EmailIsAlreadyInUseException(departmentName);
+      throw new DepartmentNameIsAlreadyInUseException(departmentName);
+    }
+  }
+
+  private void checkDepartmentNameIsFree(String departmentName, Long ownerId) {
+    Optional<Department> department = departmentRepository.findByName(departmentName);
+    if (department.isPresent() && !department.get().getDepartmentId().equals(ownerId)) {
+      throw new DepartmentNameIsAlreadyInUseException(departmentName);
     }
   }
 }
