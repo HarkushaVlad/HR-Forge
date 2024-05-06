@@ -33,6 +33,8 @@ public class EmployeeService {
     checkEmailIsFree(registrationRequest.getEmail());
     Employee employee = modelMapper.map(registrationRequest, Employee.class);
     employee.setEmployeeId(null);
+    employee.setEnabled(true);
+    employee.setAccountLocked(false);
     employeeRepository.save(employee);
   }
 
@@ -43,6 +45,7 @@ public class EmployeeService {
     Employee updatedEmployee = modelMapper.map(employeeRequest, Employee.class);
     updatedEmployee.setEmployeeId(id);
     updatedEmployee.setPasswordHash(employee.getPasswordHash());
+    updatedEmployee.setEnabled(true);
     employeeRepository.save(updatedEmployee);
   }
 
@@ -55,6 +58,7 @@ public class EmployeeService {
     Employee updatedEmployee = modelMapper.map(employeeRequest, Employee.class);
     updatedEmployee.setEmployeeId(employee.getEmployeeId());
     updatedEmployee.setPasswordHash(employee.getPasswordHash());
+    updatedEmployee.setEnabled(true);
     employeeRepository.save(updatedEmployee);
   }
 

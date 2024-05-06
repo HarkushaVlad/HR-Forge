@@ -8,7 +8,6 @@ import java.time.LocalDateTime;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Date;
-import java.util.List;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
@@ -53,9 +52,9 @@ public class Employee implements UserDetails, Principal {
 
   private Date hireDate;
 
-  private boolean accountLocked = false;
+  private boolean accountLocked;
 
-  private boolean enabled = true;
+  private boolean enabled;
 
   @CreatedDate
   @Column(nullable = false, updatable = false)
