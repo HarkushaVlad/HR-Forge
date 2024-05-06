@@ -8,6 +8,7 @@ import com.vhark.hrforgeapi.department.exceptions.DepartmentNotFoundException;
 import com.vhark.hrforgeapi.employee.exceptions.EmailIsAlreadyInUseException;
 import com.vhark.hrforgeapi.employee.exceptions.EmployeeNotFoundException;
 import com.vhark.hrforgeapi.employee.exceptions.InvalidEmployeeIdException;
+import com.vhark.hrforgeapi.position.exceptions.InvalidPositionIdException;
 import com.vhark.hrforgeapi.position.exceptions.PositionNameIsAlreadyInUseException;
 import com.vhark.hrforgeapi.position.exceptions.PositionNotFoundException;
 import java.util.HashSet;
@@ -112,6 +113,16 @@ public class GlobalExceptionHandler {
         .body(
             ExceptionResponse.builder()
                 .errorDescription(INVALID_EMPLOYEE_ID.getDescription())
+                .error(ex.getMessage())
+                .build());
+  }
+
+  @ExceptionHandler(InvalidPositionIdException.class)
+  public ResponseEntity<ExceptionResponse> handleException(InvalidPositionIdException ex) {
+    return ResponseEntity.status(INVALID_POSITION_ID.getHttpStatus())
+        .body(
+            ExceptionResponse.builder()
+                .errorDescription(INVALID_POSITION_ID.getDescription())
                 .error(ex.getMessage())
                 .build());
   }

@@ -1,5 +1,6 @@
 package com.vhark.hrforgeapi.employee;
 
+import com.vhark.hrforgeapi.auth.RegistrationRequest;
 import com.vhark.hrforgeapi.employee.exceptions.EmailIsAlreadyInUseException;
 import com.vhark.hrforgeapi.employee.exceptions.EmployeeNotFoundException;
 import java.util.Optional;
@@ -28,8 +29,9 @@ public class EmployeeService {
     return modelMapper.map(employee, EmployeeResponse.class);
   }
 
-  public void create(Employee employee) {
-    checkEmailIsFree(employee.getEmail());
+  public void create(RegistrationRequest registrationRequest) {
+    checkEmailIsFree(registrationRequest.getEmail());
+    Employee employee = modelMapper.map(registrationRequest, Employee.class);
     employee.setEmployeeId(null);
     employeeRepository.save(employee);
   }
@@ -46,7 +48,9 @@ public class EmployeeService {
 
   public void update(String email, EmployeeRequest employeeRequest) {
     Employee employee =
-            employeeRepository.findByEmail(email).orElseThrow(() -> new EmployeeNotFoundException(email));
+        employeeRepository
+            .findByEmail(email)
+            .orElseThrow(() -> new EmployeeNotFoundException(email));
     checkEmailIsFree(employeeRequest.getEmail(), employee.getEmployeeId());
     Employee updatedEmployee = modelMapper.map(employeeRequest, Employee.class);
     updatedEmployee.setEmployeeId(employee.getEmployeeId());

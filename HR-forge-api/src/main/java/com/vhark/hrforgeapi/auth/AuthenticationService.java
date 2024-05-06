@@ -5,7 +5,6 @@ import com.vhark.hrforgeapi.employee.EmployeeService;
 import com.vhark.hrforgeapi.security.JwtService;
 import java.util.HashMap;
 import lombok.RequiredArgsConstructor;
-import org.modelmapper.ModelMapper;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.stereotype.Service;
@@ -15,13 +14,11 @@ import org.springframework.stereotype.Service;
 public class AuthenticationService {
 
   private final AuthenticationManager authenticationManager;
-  private final ModelMapper modelMapper;
   private final JwtService jwtService;
   private final EmployeeService employeeService;
 
   public void register(RegistrationRequest request) {
-    Employee employee = modelMapper.map(request, Employee.class);
-    employeeService.create(employee);
+    employeeService.create(request);
   }
 
   public AuthenticationResponse authenticate(AuthenticationRequest request) {
