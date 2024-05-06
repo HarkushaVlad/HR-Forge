@@ -42,6 +42,8 @@ public class SecurityConfig {
                         "/webjars/**",
                         "/swagger-ui.html")
                     .permitAll()
+                    .requestMatchers("/employee/**", "/department/**", "/position/**")
+                    .hasAnyAuthority("System Administrator", "HR Manager")
                     .anyRequest()
                     .authenticated())
         .sessionManagement(session -> session.sessionCreationPolicy(STATELESS))
