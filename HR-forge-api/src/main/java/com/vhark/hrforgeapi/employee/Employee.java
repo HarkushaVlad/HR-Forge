@@ -53,9 +53,9 @@ public class Employee implements UserDetails, Principal {
 
   private Date hireDate;
 
-  private boolean accountLocked;
+  private boolean accountLocked = false;
 
-  private boolean enabled;
+  private boolean enabled = true;
 
   @CreatedDate
   @Column(nullable = false, updatable = false)

@@ -11,12 +11,13 @@ public enum ErrorCodes {
   INCORRECT_CURRENT_PASSWORD(BAD_REQUEST, "Current password is incorrect"),
   NEW_PASSWORD_DOES_NOT_MATCH(BAD_REQUEST, "The new password does not match"),
   BAD_CREDENTIALS(FORBIDDEN, "Login and / or password is incorrect"),
-  EMPLOYEE_NOT_FOUND(HttpStatus.NOT_FOUND, "Employee not found"),
-  EMAIL_ALREADY_IN_USE(HttpStatus.BAD_REQUEST, "Email already in use"),
-  POSITION_NOT_FOUND(HttpStatus.NOT_FOUND, "Position not found"),
-  POSITION_NAME_IN_USE(HttpStatus.BAD_REQUEST, "Position name already in use"),
-  DEPARTMENT_NOT_FOUND(HttpStatus.NOT_FOUND, "Department not found"),
-  DEPARTMENT_NAME_IN_USE(HttpStatus.BAD_REQUEST, "Department name already in use");
+  EMPLOYEE_NOT_FOUND(NOT_FOUND, "Employee not found"),
+  EMAIL_ALREADY_IN_USE(BAD_REQUEST, "Email already in use"),
+  POSITION_NOT_FOUND(NOT_FOUND, "Position not found"),
+  POSITION_NAME_IN_USE(BAD_REQUEST, "Position name already in use"),
+  DEPARTMENT_NOT_FOUND(NOT_FOUND, "Department not found"),
+  DEPARTMENT_NAME_IN_USE(BAD_REQUEST, "Department name already in use"),
+  INVALID_EMPLOYEE_ID(BAD_REQUEST, "Employee ID is invalid");
 
   private final String description;
   private final HttpStatus httpStatus;

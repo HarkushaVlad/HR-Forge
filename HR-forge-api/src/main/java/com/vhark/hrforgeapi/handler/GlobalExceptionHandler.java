@@ -7,6 +7,7 @@ import com.vhark.hrforgeapi.department.exceptions.DepartmentNameIsAlreadyInUseEx
 import com.vhark.hrforgeapi.department.exceptions.DepartmentNotFoundException;
 import com.vhark.hrforgeapi.employee.exceptions.EmailIsAlreadyInUseException;
 import com.vhark.hrforgeapi.employee.exceptions.EmployeeNotFoundException;
+import com.vhark.hrforgeapi.employee.exceptions.InvalidEmployeeIdException;
 import com.vhark.hrforgeapi.position.exceptions.PositionNameIsAlreadyInUseException;
 import com.vhark.hrforgeapi.position.exceptions.PositionNotFoundException;
 import java.util.HashSet;
@@ -22,7 +23,7 @@ public class GlobalExceptionHandler {
 
   @ExceptionHandler(BadCredentialsException.class)
   public ResponseEntity<ExceptionResponse> handleException(BadCredentialsException ex) {
-    return ResponseEntity.status(UNAUTHORIZED)
+    return ResponseEntity.status(BAD_CREDENTIALS.getHttpStatus())
         .body(
             ExceptionResponse.builder()
                 .errorDescription(BAD_CREDENTIALS.getDescription())
@@ -46,7 +47,7 @@ public class GlobalExceptionHandler {
 
   @ExceptionHandler(EmployeeNotFoundException.class)
   public ResponseEntity<ExceptionResponse> handleException(EmployeeNotFoundException ex) {
-    return ResponseEntity.status(BAD_REQUEST)
+    return ResponseEntity.status(EMPLOYEE_NOT_FOUND.getHttpStatus())
         .body(
             ExceptionResponse.builder()
                 .errorDescription(EMPLOYEE_NOT_FOUND.getDescription())
@@ -56,7 +57,7 @@ public class GlobalExceptionHandler {
 
   @ExceptionHandler(EmailIsAlreadyInUseException.class)
   public ResponseEntity<ExceptionResponse> handleException(EmailIsAlreadyInUseException ex) {
-    return ResponseEntity.status(BAD_REQUEST)
+    return ResponseEntity.status(EMAIL_ALREADY_IN_USE.getHttpStatus())
         .body(
             ExceptionResponse.builder()
                 .errorDescription(EMAIL_ALREADY_IN_USE.getDescription())
@@ -66,7 +67,7 @@ public class GlobalExceptionHandler {
 
   @ExceptionHandler(PositionNotFoundException.class)
   public ResponseEntity<ExceptionResponse> handleException(PositionNotFoundException ex) {
-    return ResponseEntity.status(BAD_REQUEST)
+    return ResponseEntity.status(POSITION_NOT_FOUND.getHttpStatus())
         .body(
             ExceptionResponse.builder()
                 .errorDescription(POSITION_NOT_FOUND.getDescription())
@@ -76,7 +77,7 @@ public class GlobalExceptionHandler {
 
   @ExceptionHandler(PositionNameIsAlreadyInUseException.class)
   public ResponseEntity<ExceptionResponse> handleException(PositionNameIsAlreadyInUseException ex) {
-    return ResponseEntity.status(BAD_REQUEST)
+    return ResponseEntity.status(POSITION_NAME_IN_USE.getHttpStatus())
         .body(
             ExceptionResponse.builder()
                 .errorDescription(POSITION_NAME_IN_USE.getDescription())
@@ -86,7 +87,7 @@ public class GlobalExceptionHandler {
 
   @ExceptionHandler(DepartmentNotFoundException.class)
   public ResponseEntity<ExceptionResponse> handleException(DepartmentNotFoundException ex) {
-    return ResponseEntity.status(BAD_REQUEST)
+    return ResponseEntity.status(DEPARTMENT_NOT_FOUND.getHttpStatus())
         .body(
             ExceptionResponse.builder()
                 .errorDescription(DEPARTMENT_NOT_FOUND.getDescription())
@@ -97,10 +98,20 @@ public class GlobalExceptionHandler {
   @ExceptionHandler(DepartmentNameIsAlreadyInUseException.class)
   public ResponseEntity<ExceptionResponse> handleException(
       DepartmentNameIsAlreadyInUseException ex) {
-    return ResponseEntity.status(BAD_REQUEST)
+    return ResponseEntity.status(DEPARTMENT_NAME_IN_USE.getHttpStatus())
         .body(
             ExceptionResponse.builder()
                 .errorDescription(DEPARTMENT_NAME_IN_USE.getDescription())
+                .error(ex.getMessage())
+                .build());
+  }
+
+  @ExceptionHandler(InvalidEmployeeIdException.class)
+  public ResponseEntity<ExceptionResponse> handleException(InvalidEmployeeIdException ex) {
+    return ResponseEntity.status(INVALID_EMPLOYEE_ID.getHttpStatus())
+        .body(
+            ExceptionResponse.builder()
+                .errorDescription(INVALID_EMPLOYEE_ID.getDescription())
                 .error(ex.getMessage())
                 .build());
   }
