@@ -4,6 +4,7 @@ import com.vhark.hrforgeapi.employee.Employee;
 import com.vhark.hrforgeapi.employee.EmployeeRepository;
 import com.vhark.hrforgeapi.employee.EmployeeResponse;
 import com.vhark.hrforgeapi.employee.EmployeeService;
+import com.vhark.hrforgeapi.personal.exceptions.InvalidPasswordException;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
 import org.springframework.security.core.Authentication;
@@ -36,8 +37,12 @@ public class PersonalService {
 
   public void updatePassword(Authentication authentication, PasswordRequest passwordRequest) {
     Employee employee = ((Employee) authentication.getPrincipal());
-    String passwordHash = passwordEncoder.encode(passwordRequest.getPassword());
-    employee.setPasswordHash(passwordHash);
+    String oldPasswordHash = passwordEncoder.encode(passwordRequest.getOldPassword());
+    if (!employee.getPasswordHash().equals(oldPasswordHash)) {
+      throw new InvalidPasswordException();
+    }
+    String newPasswordHash = passwordEncoder.encode(passwordRequest.getNewPassword());
+    employee.setPasswordHash(newPasswordHash);
     employeeRepository.save(employee);
   }
 }

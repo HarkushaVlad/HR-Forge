@@ -19,7 +19,9 @@ public enum ErrorCodes {
   DEPARTMENT_NAME_IN_USE(BAD_REQUEST, "Department name already in use"),
   INVALID_EMPLOYEE_ID(BAD_REQUEST, "Employee ID is invalid"),
   INVALID_POSITION_ID(BAD_REQUEST, "Position ID is invalid"),
-  INVALID_DEPARTMENT_ID(BAD_REQUEST, "Department ID is invalid");
+  INVALID_DEPARTMENT_ID(BAD_REQUEST, "Department ID is invalid"),
+  INVALID_PASSWORD(UNAUTHORIZED, "Invalid password"),
+  ;
 
   private final String description;
   private final HttpStatus httpStatus;

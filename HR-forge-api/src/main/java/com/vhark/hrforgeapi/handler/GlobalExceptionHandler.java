@@ -9,6 +9,7 @@ import com.vhark.hrforgeapi.department.exceptions.InvalidDepartmentIdException;
 import com.vhark.hrforgeapi.employee.exceptions.EmailIsAlreadyInUseException;
 import com.vhark.hrforgeapi.employee.exceptions.EmployeeNotFoundException;
 import com.vhark.hrforgeapi.employee.exceptions.InvalidEmployeeIdException;
+import com.vhark.hrforgeapi.personal.exceptions.InvalidPasswordException;
 import com.vhark.hrforgeapi.position.exceptions.InvalidPositionIdException;
 import com.vhark.hrforgeapi.position.exceptions.PositionNameIsAlreadyInUseException;
 import com.vhark.hrforgeapi.position.exceptions.PositionNotFoundException;
@@ -134,6 +135,16 @@ public class GlobalExceptionHandler {
         .body(
             ExceptionResponse.builder()
                 .errorDescription(INVALID_DEPARTMENT_ID.getDescription())
+                .error(ex.getMessage())
+                .build());
+  }
+
+  @ExceptionHandler(InvalidPasswordException.class)
+  public ResponseEntity<ExceptionResponse> handleException(InvalidPasswordException ex) {
+    return ResponseEntity.status(INVALID_PASSWORD.getHttpStatus())
+        .body(
+            ExceptionResponse.builder()
+                .errorDescription(INVALID_PASSWORD.getDescription())
                 .error(ex.getMessage())
                 .build());
   }

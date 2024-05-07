@@ -10,8 +10,13 @@ import lombok.Setter;
 @Builder
 public class PasswordRequest {
 
-  @Size(min = 6, message = "Password should contain at least 6 characters")
-  @NotEmpty(message = "Password is mandatory")
-  @NotBlank(message = "Password is mandatory")
-  private String password;
+  @Size(min = 6, message = "New password should contain at least 6 characters")
+  @NotEmpty(message = "New password is mandatory")
+  @NotBlank(message = "New password is mandatory")
+  private String newPassword;
+
+  @Size(min = 6, message = "Old password should contain at least 6 characters")
+  @NotEmpty(message = "Old password is mandatory")
+  @NotBlank(message = "Old password is mandatory")
+  private String oldPassword;
 }
