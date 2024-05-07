@@ -110,7 +110,7 @@ public class EmployeeService {
     }
   }
 
-  private void checkEmailIsFree(String email, Long ownerId) {
+  public void checkEmailIsFree(String email, Long ownerId) {
     Optional<Employee> employee = employeeRepository.findByEmail(email);
     if (employee.isPresent() && !employee.get().getEmployeeId().equals(ownerId)) {
       throw new EmailIsAlreadyInUseException(email);
