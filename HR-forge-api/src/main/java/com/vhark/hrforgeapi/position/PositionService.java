@@ -1,10 +1,16 @@
 package com.vhark.hrforgeapi.position;
 
+import com.vhark.hrforgeapi.common.PageResponse;
 import com.vhark.hrforgeapi.position.exceptions.PositionNameIsAlreadyInUseException;
 import com.vhark.hrforgeapi.position.exceptions.PositionNotFoundException;
+import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -26,6 +32,25 @@ public class PositionService {
             .findByName(positionName)
             .orElseThrow(() -> new PositionNotFoundException(positionName));
     return modelMapper.map(position, PositionResponse.class);
+  }
+
+  public PageResponse<PositionResponse> findAll(
+      int page, int size, String sortField, Sort.Direction sortDirection) {
+    Sort sortBy = Sort.by(sortDirection, sortField);
+    Pageable pageable = PageRequest.of(page, size, sortBy);
+    Page<Position> positions = positionRepository.findAll(pageable);
+    List<PositionResponse> positionResponses =
+        positions.stream()
+            .map(position -> modelMapper.map(position, PositionResponse.class))
+            .toList();
+    return new PageResponse<>(
+        positionResponses,
+        positions.getNumber(),
+        positions.getSize(),
+        positions.getTotalElements(),
+        positions.getTotalPages(),
+        positions.isFirst(),
+        positions.isLast());
   }
 
   public void create(PositionRequest positionRequest) {

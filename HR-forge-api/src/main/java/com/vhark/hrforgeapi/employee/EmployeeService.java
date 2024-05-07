@@ -1,11 +1,17 @@
 package com.vhark.hrforgeapi.employee;
 
 import com.vhark.hrforgeapi.auth.RegistrationRequest;
+import com.vhark.hrforgeapi.common.PageResponse;
 import com.vhark.hrforgeapi.employee.exceptions.EmailIsAlreadyInUseException;
 import com.vhark.hrforgeapi.employee.exceptions.EmployeeNotFoundException;
+import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -27,6 +33,25 @@ public class EmployeeService {
             .findByEmail(email)
             .orElseThrow(() -> new EmployeeNotFoundException(email));
     return modelMapper.map(employee, EmployeeResponse.class);
+  }
+
+  public PageResponse<EmployeeResponse> findAll(
+      int page, int size, String sortField, Sort.Direction sortDirection) {
+    Sort sortBy = Sort.by(sortDirection, sortField);
+    Pageable pageable = PageRequest.of(page, size, sortBy);
+    Page<Employee> employees = employeeRepository.findAll(pageable);
+    List<EmployeeResponse> employeeResponses =
+        employees.stream()
+            .map(employee -> modelMapper.map(employee, EmployeeResponse.class))
+            .toList();
+    return new PageResponse<>(
+        employeeResponses,
+        employees.getNumber(),
+        employees.getSize(),
+        employees.getTotalElements(),
+        employees.getTotalPages(),
+        employees.isFirst(),
+        employees.isLast());
   }
 
   public void create(RegistrationRequest registrationRequest) {

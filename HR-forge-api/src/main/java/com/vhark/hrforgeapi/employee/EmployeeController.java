@@ -1,9 +1,11 @@
 package com.vhark.hrforgeapi.employee;
 
+import com.vhark.hrforgeapi.common.PageResponse;
 import com.vhark.hrforgeapi.employee.exceptions.InvalidEmployeeIdException;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -16,8 +18,19 @@ public class EmployeeController {
 
   private final EmployeeService employeeService;
 
+  @GetMapping()
+  public ResponseEntity<PageResponse<EmployeeResponse>> findAll(
+      @RequestParam(name = "page", defaultValue = "0") int page,
+      @RequestParam(name = "size", defaultValue = "10") int size,
+      @RequestParam(name = "sortField", defaultValue = "firstName") String sortField,
+      @RequestParam(name = "sortDirection", defaultValue = "ASC") String sortDirection) {
+    Sort.Direction direction =
+        sortDirection.equalsIgnoreCase("DESC") ? Sort.Direction.DESC : Sort.Direction.ASC;
+    return ResponseEntity.ok(employeeService.findAll(page, size, sortField, direction));
+  }
+
   @GetMapping("/{id-or-email}")
-  public ResponseEntity<EmployeeResponse> update(@PathVariable("id-or-email") String idOrEmail) {
+  public ResponseEntity<EmployeeResponse> find(@PathVariable("id-or-email") String idOrEmail) {
     if (idOrEmail.contains("@")) {
       return ResponseEntity.ok(employeeService.findByEmail(idOrEmail));
     } else {

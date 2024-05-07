@@ -1,10 +1,16 @@
 package com.vhark.hrforgeapi.department;
 
+import com.vhark.hrforgeapi.common.PageResponse;
 import com.vhark.hrforgeapi.department.exceptions.DepartmentNameIsAlreadyInUseException;
 import com.vhark.hrforgeapi.department.exceptions.DepartmentNotFoundException;
+import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
 import org.modelmapper.ModelMapper;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -26,6 +32,25 @@ public class DepartmentService {
             .findByName(departmentName)
             .orElseThrow(() -> new DepartmentNotFoundException(departmentName));
     return modelMapper.map(department, DepartmentResponse.class);
+  }
+
+  public PageResponse<DepartmentResponse> findAll(
+      int page, int size, String sortField, Sort.Direction sortDirection) {
+    Sort sortBy = Sort.by(sortDirection, sortField);
+    Pageable pageable = PageRequest.of(page, size, sortBy);
+    Page<Department> departments = departmentRepository.findAll(pageable);
+    List<DepartmentResponse> departmentResponses =
+        departments.stream()
+            .map(department -> modelMapper.map(department, DepartmentResponse.class))
+            .toList();
+    return new PageResponse<>(
+        departmentResponses,
+        departments.getNumber(),
+        departments.getSize(),
+        departments.getTotalElements(),
+        departments.getTotalPages(),
+        departments.isFirst(),
+        departments.isLast());
   }
 
   public void create(DepartmentRequest departmentRequest) {
