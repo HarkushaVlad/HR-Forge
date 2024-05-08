@@ -2,8 +2,14 @@ package com.vhark.hrforgeapi.employee;
 
 import com.vhark.hrforgeapi.auth.RegistrationRequest;
 import com.vhark.hrforgeapi.common.PageResponse;
+import com.vhark.hrforgeapi.department.Department;
+import com.vhark.hrforgeapi.department.DepartmentRepository;
+import com.vhark.hrforgeapi.department.exceptions.DepartmentNotFoundException;
 import com.vhark.hrforgeapi.employee.exceptions.EmailIsAlreadyInUseException;
 import com.vhark.hrforgeapi.employee.exceptions.EmployeeNotFoundException;
+import com.vhark.hrforgeapi.position.Position;
+import com.vhark.hrforgeapi.position.PositionRepository;
+import com.vhark.hrforgeapi.position.exceptions.PositionNotFoundException;
 import java.util.List;
 import java.util.Optional;
 import lombok.RequiredArgsConstructor;
@@ -12,6 +18,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -19,7 +26,10 @@ import org.springframework.stereotype.Service;
 public class EmployeeService {
 
   private final EmployeeRepository employeeRepository;
+  private final DepartmentRepository departmentRepository;
+  private final PositionRepository positionRepository;
   private final ModelMapper modelMapper;
+  private final PasswordEncoder passwordEncoder;
 
   public EmployeeResponse findById(long id) {
     Employee employee =
@@ -56,8 +66,20 @@ public class EmployeeService {
 
   public void create(RegistrationRequest registrationRequest) {
     checkEmailIsFree(registrationRequest.getEmail());
+    Position employeePosition =
+        positionRepository
+            .findByName(registrationRequest.getPositionName())
+            .orElseThrow(
+                () -> new PositionNotFoundException(registrationRequest.getPositionName()));
+    Department employeeDepartment =
+        departmentRepository
+            .findByName(registrationRequest.getDepartmentName())
+            .orElseThrow(
+                () -> new DepartmentNotFoundException(registrationRequest.getDepartmentName()));
     Employee employee = modelMapper.map(registrationRequest, Employee.class);
     employee.setEmployeeId(null);
+    employee.setPosition(employeePosition);
+    employee.setDepartment(employeeDepartment);
     employee.setEnabled(true);
     employee.setAccountLocked(false);
     employeeRepository.save(employee);
@@ -115,5 +137,13 @@ public class EmployeeService {
     if (employee.isPresent() && !employee.get().getEmployeeId().equals(ownerId)) {
       throw new EmailIsAlreadyInUseException(email);
     }
+  }
+
+  public void updatePasswordByAdmin(long id, AdminPasswordRequest passwordRequest) {
+    Employee employee =
+        employeeRepository.findById(id).orElseThrow(() -> new EmployeeNotFoundException(id));
+    String newPasswordHash = passwordEncoder.encode(passwordRequest.getNewPassword());
+    employee.setPasswordHash(newPasswordHash);
+    employeeRepository.save(employee);
   }
 }

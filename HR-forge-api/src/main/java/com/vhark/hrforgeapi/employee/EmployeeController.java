@@ -75,4 +75,11 @@ public class EmployeeController {
       }
     }
   }
+
+  @PutMapping("/password/{id}")
+  public ResponseEntity<?> updatePassword(
+      @RequestBody @Valid AdminPasswordRequest passwordRequest, @PathVariable long id) {
+    employeeService.updatePasswordByAdmin(id, passwordRequest);
+    return ResponseEntity.noContent().build();
+  }
 }
