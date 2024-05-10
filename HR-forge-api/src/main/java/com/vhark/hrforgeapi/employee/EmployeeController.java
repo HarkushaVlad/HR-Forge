@@ -37,7 +37,8 @@ public class EmployeeController {
             description = "Sort direction (ASC or DESC)",
             example = "ASC",
             schema = @Schema(implementation = String.class))
-      })
+      },
+      operationId = "getAllEmployees")
   @GetMapping()
   public ResponseEntity<PageResponse<EmployeeResponse>> findAll(
       @RequestParam(name = "page", defaultValue = "0") int page,
@@ -52,7 +53,8 @@ public class EmployeeController {
   @Operation(
       summary = "Find employee by ID or email",
       description = "Endpoint for retrieving an employee by ID or email address.",
-      parameters = {@Parameter(name = "id-or-email", description = "Employee ID or email")})
+      parameters = {@Parameter(name = "id-or-email", description = "Employee ID or email")},
+      operationId = "getEmployee")
   @GetMapping("/{id-or-email}")
   public ResponseEntity<EmployeeResponse> find(@PathVariable("id-or-email") String idOrEmail) {
     if (idOrEmail.contains("@")) {
@@ -70,7 +72,8 @@ public class EmployeeController {
   @Operation(
       summary = "Update employee details",
       description = "Endpoint for updating employee details by ID or email.",
-      parameters = {@Parameter(name = "id-or-email", description = "Employee ID or email")})
+      parameters = {@Parameter(name = "id-or-email", description = "Employee ID or email")},
+      operationId = "updateEmployee")
   @PutMapping("/{id-or-email}")
   public ResponseEntity<?> update(
       @RequestBody @Valid EmployeeRequest request, @PathVariable("id-or-email") String idOrEmail) {
@@ -91,7 +94,8 @@ public class EmployeeController {
   @Operation(
       summary = "Delete employee",
       description = "Endpoint for deleting an employee by ID or email.",
-      parameters = {@Parameter(name = "id-or-email", description = "Employee ID or email")})
+      parameters = {@Parameter(name = "id-or-email", description = "Employee ID or email")},
+      operationId = "deleteEmployee")
   @DeleteMapping("/{id-or-email}")
   public ResponseEntity<?> delete(@PathVariable("id-or-email") String idOrEmail) {
     if (idOrEmail.contains("@")) {
@@ -111,7 +115,8 @@ public class EmployeeController {
   @Operation(
       summary = "Update employee password",
       description = "Endpoint for updating an employee's password by ID (admin operation).",
-      parameters = {@Parameter(name = "id", description = "Employee ID")})
+      parameters = {@Parameter(name = "id", description = "Employee ID")},
+      operationId = "updateEmployeePassword")
   @PutMapping("/password/{id}")
   public ResponseEntity<?> updatePassword(
       @RequestBody @Valid AdminPasswordRequest passwordRequest, @PathVariable long id) {

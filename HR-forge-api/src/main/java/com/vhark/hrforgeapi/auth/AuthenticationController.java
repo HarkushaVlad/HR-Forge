@@ -19,13 +19,14 @@ public class AuthenticationController {
   private final AuthenticationService authenticationService;
 
   @Operation(
-          summary = "Register a new user",
-          description = "Endpoint for registering a new user in the system.",
-          requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
-                  description = "Registration request details",
-                  required = true,
-                  content = @Content(schema = @Schema(implementation = RegistrationRequest.class)))
-  )
+      summary = "Register a new user",
+      description = "Endpoint for registering a new user in the system.",
+      requestBody =
+          @io.swagger.v3.oas.annotations.parameters.RequestBody(
+              description = "Registration request details",
+              required = true,
+              content = @Content(schema = @Schema(implementation = RegistrationRequest.class))),
+      operationId = "register")
   @PostMapping("/register")
   public ResponseEntity<?> register(@RequestBody @Valid RegistrationRequest request) {
     authenticationService.register(request);
@@ -33,13 +34,14 @@ public class AuthenticationController {
   }
 
   @Operation(
-          summary = "Authenticate a user",
-          description = "Endpoint for authenticating a user and generating an authentication token.",
-          requestBody = @io.swagger.v3.oas.annotations.parameters.RequestBody(
-                  description = "Authentication request details",
-                  required = true,
-                  content = @Content(schema = @Schema(implementation = AuthenticationRequest.class)))
-  )
+      summary = "Authenticate a user",
+      description = "Endpoint for authenticating a user and generating an authentication token.",
+      requestBody =
+          @io.swagger.v3.oas.annotations.parameters.RequestBody(
+              description = "Authentication request details",
+              required = true,
+              content = @Content(schema = @Schema(implementation = AuthenticationRequest.class))),
+      operationId = "authenticate")
   @PostMapping("/authenticate")
   public ResponseEntity<AuthenticationResponse> authenticate(
       @RequestBody @Valid AuthenticationRequest request) {

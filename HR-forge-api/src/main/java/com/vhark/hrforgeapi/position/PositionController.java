@@ -38,7 +38,8 @@ public class PositionController {
             description = "Sort direction (ASC or DESC)",
             example = "ASC",
             schema = @Schema(implementation = String.class))
-      })
+      },
+      operationId = "getAllPositions")
   @GetMapping()
   public ResponseEntity<PageResponse<PositionResponse>> findAll(
       @RequestParam(name = "page", defaultValue = "0") int page,
@@ -53,7 +54,8 @@ public class PositionController {
   @Operation(
       summary = "Find position by ID or name",
       description = "Endpoint for retrieving a position by ID or name.",
-      parameters = {@Parameter(name = "id-or-name", description = "Position ID or name")})
+      parameters = {@Parameter(name = "id-or-name", description = "Position ID or name")},
+      operationId = "getPosition")
   @GetMapping("/{id-or-name}")
   public ResponseEntity<PositionResponse> update(@PathVariable("id-or-name") String idOrName) {
     if (idOrName.matches("^[0-9]+$")) {
@@ -75,7 +77,8 @@ public class PositionController {
           @io.swagger.v3.oas.annotations.parameters.RequestBody(
               description = "Position details",
               required = true,
-              content = @Content(schema = @Schema(implementation = PositionRequest.class))))
+              content = @Content(schema = @Schema(implementation = PositionRequest.class))),
+      operationId = "createPosition")
   @PostMapping()
   public ResponseEntity<?> create(@RequestBody @Valid PositionRequest request) {
     positionService.create(request);
@@ -90,7 +93,8 @@ public class PositionController {
           @io.swagger.v3.oas.annotations.parameters.RequestBody(
               description = "Position details",
               required = true,
-              content = @Content(schema = @Schema(implementation = PositionRequest.class))))
+              content = @Content(schema = @Schema(implementation = PositionRequest.class))),
+      operationId = "updatePosition")
   @PutMapping("/{id-or-name}")
   public ResponseEntity<?> update(
       @RequestBody @Valid PositionRequest request, @PathVariable("id-or-name") String idOrName) {
@@ -111,7 +115,8 @@ public class PositionController {
   @Operation(
       summary = "Delete position",
       description = "Endpoint for deleting a position by ID or name.",
-      parameters = {@Parameter(name = "id-or-name", description = "Position ID or name")})
+      parameters = {@Parameter(name = "id-or-name", description = "Position ID or name")},
+      operationId = "deletePosition")
   @DeleteMapping("/{id-or-name}")
   public ResponseEntity<?> delete(@PathVariable("id-or-name") String idOrName) {
     if (idOrName.matches("^[0-9]+$")) {

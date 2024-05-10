@@ -22,7 +22,8 @@ public class PersonalController {
 
   @Operation(
       summary = "Find personal information",
-      description = "Endpoint for retrieving personal information of the authenticated user.")
+      description = "Endpoint for retrieving personal information of the authenticated user.",
+      operationId = "getPersonal")
   @GetMapping()
   public ResponseEntity<EmployeeResponse> find(Authentication authentication) {
     return ResponseEntity.ok(personalService.find(authentication));
@@ -35,7 +36,8 @@ public class PersonalController {
           @io.swagger.v3.oas.annotations.parameters.RequestBody(
               description = "Updated personal information",
               required = true,
-              content = @Content(schema = @Schema(implementation = PersonalRequest.class))))
+              content = @Content(schema = @Schema(implementation = PersonalRequest.class))),
+      operationId = "updatePersonal")
   @PutMapping()
   public ResponseEntity<?> update(
       @RequestBody @Valid PersonalRequest request, Authentication authentication) {
@@ -50,7 +52,8 @@ public class PersonalController {
           @io.swagger.v3.oas.annotations.parameters.RequestBody(
               description = "New password",
               required = true,
-              content = @Content(schema = @Schema(implementation = PasswordRequest.class))))
+              content = @Content(schema = @Schema(implementation = PasswordRequest.class))),
+      operationId = "updatePersonalPassword")
   @PutMapping("/password")
   public ResponseEntity<?> updatePassword(
       @RequestBody @Valid PasswordRequest request, Authentication authentication) {

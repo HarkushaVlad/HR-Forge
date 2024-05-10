@@ -38,7 +38,8 @@ public class DepartmentController {
             description = "Sort direction (ASC or DESC)",
             example = "ASC",
             schema = @Schema(implementation = String.class))
-      })
+      },
+      operationId = "getAllDepartments")
   @GetMapping()
   public ResponseEntity<PageResponse<DepartmentResponse>> findAll(
       @RequestParam(name = "page", defaultValue = "0") int page,
@@ -53,7 +54,8 @@ public class DepartmentController {
   @Operation(
       summary = "Find department by ID or name",
       description = "Endpoint for retrieving a department by ID or name.",
-      parameters = {@Parameter(name = "id-or-name", description = "Department ID or name")})
+      parameters = {@Parameter(name = "id-or-name", description = "Department ID or name")},
+      operationId = "getDepartment")
   @GetMapping("/{id-or-name}")
   public ResponseEntity<DepartmentResponse> update(@PathVariable("id-or-name") String idOrName) {
     if (idOrName.matches("^[0-9]+$")) {
@@ -75,7 +77,8 @@ public class DepartmentController {
           @io.swagger.v3.oas.annotations.parameters.RequestBody(
               description = "Department details",
               required = true,
-              content = @Content(schema = @Schema(implementation = DepartmentRequest.class))))
+              content = @Content(schema = @Schema(implementation = DepartmentRequest.class))),
+      operationId = "createDepartment")
   @PostMapping()
   public ResponseEntity<?> create(@RequestBody @Valid DepartmentRequest request) {
     departmentService.create(request);
@@ -90,7 +93,8 @@ public class DepartmentController {
           @io.swagger.v3.oas.annotations.parameters.RequestBody(
               description = "Department details",
               required = true,
-              content = @Content(schema = @Schema(implementation = DepartmentRequest.class))))
+              content = @Content(schema = @Schema(implementation = DepartmentRequest.class))),
+      operationId = "updateDepartment")
   @PutMapping("/{id-or-name}")
   public ResponseEntity<?> update(
       @RequestBody @Valid DepartmentRequest request, @PathVariable("id-or-name") String idOrName) {
@@ -111,7 +115,8 @@ public class DepartmentController {
   @Operation(
       summary = "Delete department",
       description = "Endpoint for deleting a department by ID or name.",
-      parameters = {@Parameter(name = "id-or-name", description = "Department ID or name")})
+      parameters = {@Parameter(name = "id-or-name", description = "Department ID or name")},
+      operationId = "deleteDepartment")
   @DeleteMapping("/{id-or-name}")
   public ResponseEntity<?> delete(@PathVariable("id-or-name") String idOrName) {
     if (idOrName.matches("^[0-9]+$")) {
