@@ -7,6 +7,7 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
@@ -24,7 +25,7 @@ public class PersonalController {
       summary = "Find personal information",
       description = "Endpoint for retrieving personal information of the authenticated user.",
       operationId = "getPersonal")
-  @GetMapping()
+  @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<EmployeeResponse> find(Authentication authentication) {
     return ResponseEntity.ok(personalService.find(authentication));
   }
@@ -38,7 +39,7 @@ public class PersonalController {
               required = true,
               content = @Content(schema = @Schema(implementation = PersonalRequest.class))),
       operationId = "updatePersonal")
-  @PutMapping()
+  @PutMapping(produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<?> update(
       @RequestBody @Valid PersonalRequest request, Authentication authentication) {
     personalService.update(authentication, request);
@@ -54,7 +55,7 @@ public class PersonalController {
               required = true,
               content = @Content(schema = @Schema(implementation = PasswordRequest.class))),
       operationId = "updatePersonalPassword")
-  @PutMapping("/password")
+  @PutMapping(value = "/password", produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<?> updatePassword(
       @RequestBody @Valid PasswordRequest request, Authentication authentication) {
     personalService.updatePassword(authentication, request);

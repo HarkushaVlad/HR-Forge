@@ -9,6 +9,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -39,7 +40,7 @@ public class EmployeeController {
             schema = @Schema(implementation = String.class))
       },
       operationId = "getAllEmployees")
-  @GetMapping()
+  @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<PageResponse<EmployeeResponse>> findAll(
       @RequestParam(name = "page", defaultValue = "0") int page,
       @RequestParam(name = "size", defaultValue = "10") int size,
@@ -55,7 +56,7 @@ public class EmployeeController {
       description = "Endpoint for retrieving an employee by ID or email address.",
       parameters = {@Parameter(name = "id-or-email", description = "Employee ID or email")},
       operationId = "getEmployee")
-  @GetMapping("/{id-or-email}")
+  @GetMapping(value = "/{id-or-email}", produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<EmployeeResponse> find(@PathVariable("id-or-email") String idOrEmail) {
     if (idOrEmail.contains("@")) {
       return ResponseEntity.ok(employeeService.findByEmail(idOrEmail));
@@ -74,7 +75,7 @@ public class EmployeeController {
       description = "Endpoint for updating employee details by ID or email.",
       parameters = {@Parameter(name = "id-or-email", description = "Employee ID or email")},
       operationId = "updateEmployee")
-  @PutMapping("/{id-or-email}")
+  @PutMapping(value = "/{id-or-email}", produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<?> update(
       @RequestBody @Valid EmployeeRequest request, @PathVariable("id-or-email") String idOrEmail) {
     if (idOrEmail.contains("@")) {
@@ -96,7 +97,7 @@ public class EmployeeController {
       description = "Endpoint for deleting an employee by ID or email.",
       parameters = {@Parameter(name = "id-or-email", description = "Employee ID or email")},
       operationId = "deleteEmployee")
-  @DeleteMapping("/{id-or-email}")
+  @DeleteMapping(value = "/{id-or-email}", produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<?> delete(@PathVariable("id-or-email") String idOrEmail) {
     if (idOrEmail.contains("@")) {
       employeeService.deleteByEmail(idOrEmail);
@@ -117,7 +118,7 @@ public class EmployeeController {
       description = "Endpoint for updating an employee's password by ID (admin operation).",
       parameters = {@Parameter(name = "id", description = "Employee ID")},
       operationId = "updateEmployeePassword")
-  @PutMapping("/password/{id}")
+  @PutMapping(value = "/password/{id}", produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<?> updatePassword(
       @RequestBody @Valid AdminPasswordRequest passwordRequest, @PathVariable long id) {
     employeeService.updatePasswordByAdmin(id, passwordRequest);

@@ -10,6 +10,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
@@ -40,7 +41,7 @@ public class DepartmentController {
             schema = @Schema(implementation = String.class))
       },
       operationId = "getAllDepartments")
-  @GetMapping()
+  @GetMapping(produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<PageResponse<DepartmentResponse>> findAll(
       @RequestParam(name = "page", defaultValue = "0") int page,
       @RequestParam(name = "size", defaultValue = "10") int size,
@@ -56,7 +57,7 @@ public class DepartmentController {
       description = "Endpoint for retrieving a department by ID or name.",
       parameters = {@Parameter(name = "id-or-name", description = "Department ID or name")},
       operationId = "getDepartment")
-  @GetMapping("/{id-or-name}")
+  @GetMapping(value = "/{id-or-name}", produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<DepartmentResponse> update(@PathVariable("id-or-name") String idOrName) {
     if (idOrName.matches("^[0-9]+$")) {
       try {
@@ -79,7 +80,7 @@ public class DepartmentController {
               required = true,
               content = @Content(schema = @Schema(implementation = DepartmentRequest.class))),
       operationId = "createDepartment")
-  @PostMapping()
+  @PostMapping(produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<?> create(@RequestBody @Valid DepartmentRequest request) {
     departmentService.create(request);
     return ResponseEntity.noContent().build();
@@ -95,7 +96,7 @@ public class DepartmentController {
               required = true,
               content = @Content(schema = @Schema(implementation = DepartmentRequest.class))),
       operationId = "updateDepartment")
-  @PutMapping("/{id-or-name}")
+  @PutMapping(value = "/{id-or-name}", produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<?> update(
       @RequestBody @Valid DepartmentRequest request, @PathVariable("id-or-name") String idOrName) {
     if (idOrName.matches("^[0-9]+$")) {
@@ -117,7 +118,7 @@ public class DepartmentController {
       description = "Endpoint for deleting a department by ID or name.",
       parameters = {@Parameter(name = "id-or-name", description = "Department ID or name")},
       operationId = "deleteDepartment")
-  @DeleteMapping("/{id-or-name}")
+  @DeleteMapping(value = "/{id-or-name}", produces = MediaType.APPLICATION_JSON_VALUE)
   public ResponseEntity<?> delete(@PathVariable("id-or-name") String idOrName) {
     if (idOrName.matches("^[0-9]+$")) {
       try {
