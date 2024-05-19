@@ -1,1 +1,95 @@
-<p>personal works!</p>
+<div class="container">
+  <div class="card mt-3">
+    <div class="card-header">
+      <h3>Employee Information</h3>
+    </div>
+    <div class="card-body" *ngIf="!isLoading && !isError">
+      <div class="row mb-2">
+        <div class="col-md-6">
+          <strong>First Name:</strong> {{ personalInformation.firstName }}
+          <button class="btn btn-sm btn-link" (click)="openEditDialog('First Name', 'firstName')">
+            <i class="fas fa-edit"></i>
+          </button>
+        </div>
+        <div class="col-md-6">
+          <strong>Position:</strong> {{ personalInformation.positionName }}
+        </div>
+      </div>
+      <div class="row mb-2">
+        <div class="col-md-6">
+          <strong>Last Name:</strong> {{ personalInformation.lastName }}
+          <button class="btn btn-sm btn-link" (click)="openEditDialog('Last Name', 'lastName')">
+            <i class="fas fa-edit"></i>
+          </button>
+        </div>
+        <div class="col-md-6">
+          <strong>Department:</strong> {{ personalInformation.departmentName }}
+        </div>
+      </div>
+      <div class="row mb-2">
+        <div class="col-md-6">
+          <strong>Email:</strong> {{ personalInformation.email }}
+          <button class="btn btn-sm btn-link" (click)="openEditDialog('Email', 'email')">
+            <i class="fas fa-edit"></i>
+          </button>
+        </div>
+        <div class="col-md-6">
+          <strong>Salary:</strong> {{ personalInformation.salary | currency }}
+        </div>
+      </div>
+      <div class="row mb-2">
+        <div class="col-md-6">
+          <strong>Birth Date:</strong> {{ personalInformation.birthDate | date }}
+          <button class="btn btn-sm btn-link" (click)="openEditDialog('Birth Date', 'birthDate')">
+            <i class="fas fa-edit"></i>
+          </button>
+        </div>
+        <div class="col-md-6">
+          <strong>Hire Date:</strong> {{ personalInformation.hireDate | date }}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="text-center mt-5" *ngIf="isLoading">
+    <div class="spinner-border text-primary" role="status">
+      <span class="visually-hidden">Loading...</span>
+    </div>
+  </div>
+
+  <div class="alert alert-danger mt-3" role="alert" *ngIf="isError">
+    Failed to load employee information. Please try again later.
+  </div>
+</div>
+
+<!-- Edit Modal -->
+<div bsModal #editModal="bs-modal" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="dialog-nested-name">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Edit {{ fieldName | titlecase }}</h5>
+        <button type="button" class="btn-close" (click)="editModal.hide()"></button>
+      </div>
+      <div class="text-center mt-5" *ngIf="isLoading">
+        <div class="spinner-border text-primary" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+      </div>
+      <div class="modal-body" *ngIf="!isLoading">
+        <div class="alert alert-danger" role="alert" *ngIf="errorMsg.length">
+          <p *ngFor="let msg of errorMsg">{{ msg }}</p>
+        </div>
+        <div *ngIf="isDateField">
+          <input type="text" class="form-control" bsDatepicker [(ngModel)]="fieldValue" />
+        </div>
+        <div *ngIf="!isDateField">
+          <input type="text" class="form-control" [(ngModel)]="fieldValue" />
+        </div>
+      </div>
+      <div class="modal-footer" *ngIf="!isLoading">
+        <button type="button" class="btn btn-secondary" (click)="editModal.hide()">Close</button>
+        <button type="button" class="btn btn-primary" (click)="save()">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
