@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { LoginComponent } from './pages/login/login.component';
 import { authGuard } from './services/guard/auth.guard';
 import { loginGuard } from './services/guard/login.guard';
+import { LogoutComponent } from './pages/logout/logout.component';
 
 const routes: Routes = [
   {
@@ -16,12 +17,20 @@ const routes: Routes = [
     canActivate: [loginGuard],
   },
   {
-    path: 'personal',
-    loadChildren: () =>
-      import('./modules/personal/personal.module').then(
-        (m) => m.PersonalModule
-      ),
+    path: 'logout',
+    component: LogoutComponent,
     canActivate: [authGuard],
+  },
+  {
+    path: 'profile',
+    loadChildren: () =>
+      import('./modules/personal/main.module').then((m) => m.MainModule),
+    canActivate: [authGuard],
+  },
+  {
+    path: '**',
+    redirectTo: 'login',
+    pathMatch: 'full',
   },
 ];
 

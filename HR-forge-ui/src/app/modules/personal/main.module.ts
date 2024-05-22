@@ -1,21 +1,23 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { PersonalRoutingModule } from './personal-routing.module';
-import { PersonalComponent } from './pages/personal/personal.component';
+import { MainRoutingModule } from './main-routing.module';
+import { ProfileComponent } from './pages/profile/profile.component';
 import { FormsModule } from '@angular/forms';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { SharedModule } from '../shared/shared/shared.module';
 
 @NgModule({
-  declarations: [PersonalComponent],
+  declarations: [ProfileComponent],
   imports: [
     CommonModule,
-    PersonalRoutingModule,
+    MainRoutingModule,
     FormsModule,
     ModalModule,
     BsDatepickerModule,
     ModalModule.forRoot(),
+    SharedModule,
   ],
 })
-export class PersonalModule {}
+export class MainModule {}

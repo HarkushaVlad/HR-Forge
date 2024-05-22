@@ -4,11 +4,11 @@ import { EmployeeResponse } from '../../../../services/models/employee-response'
 import { PersonalRequest } from '../../../../services/models/personal-request';
 
 @Component({
-  selector: 'app-personal',
-  templateUrl: './personal.component.html',
-  styleUrl: './personal.component.scss',
+  selector: 'app-profile',
+  templateUrl: './profile.component.html',
+  styleUrl: './profile.component.scss',
 })
-export class PersonalComponent implements OnInit {
+export class ProfileComponent implements OnInit {
   personalRequest: PersonalRequest = {
     birthDate: '',
     email: '',

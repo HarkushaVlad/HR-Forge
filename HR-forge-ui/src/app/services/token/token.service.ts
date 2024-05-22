@@ -13,6 +13,18 @@ export class TokenService {
     return localStorage.getItem('token') as string;
   }
 
+  getAuthorities(): string[] {
+    const token = this.token;
+    if (!token) return [];
+    try {
+      const decodedToken: any = jwtDecode(token);
+      return decodedToken.authorities || [];
+    } catch (e) {
+      console.error('Error decoding token:', e);
+      return [];
+    }
+  }
+
   private isTokenExpired(): boolean {
     if (!this.token) {
       this.token = this.token;

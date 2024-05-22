@@ -12,15 +12,18 @@ import {
 import { LoginComponent } from './pages/login/login.component';
 import { FormsModule } from '@angular/forms';
 import { HttpTokenInterceptor } from './services/interceptor/http-token.interceptor';
+import { SharedModule } from './modules/shared/shared/shared.module';
+import { LogoutComponent } from './pages/logout/logout.component';
 
 @NgModule({
-  declarations: [AppComponent, LoginComponent],
+  declarations: [AppComponent, LoginComponent, LogoutComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule,
     FormsModule,
+    SharedModule,
   ],
   providers: [
     HttpClient,
