@@ -6,7 +6,6 @@ import { ProfileComponent } from './pages/profile/profile.component';
 import { FormsModule } from '@angular/forms';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
-import { SharedModule } from '../shared/shared/shared.module';
 
 @NgModule({
   declarations: [ProfileComponent],
@@ -17,7 +16,6 @@ import { SharedModule } from '../shared/shared/shared.module';
     ModalModule,
     BsDatepickerModule,
     ModalModule.forRoot(),
-    SharedModule,
   ],
 })
 export class MainModule {}
