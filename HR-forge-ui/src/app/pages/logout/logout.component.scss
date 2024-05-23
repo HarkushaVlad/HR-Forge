@@ -1,0 +1,15 @@
+.container {
+  margin-top: 20px;
+  max-width: 500px;
+}
+
+.card-header {
+  background-color: #f7f7f7;
+  border-bottom: 1px solid #ddd;
+}
+
+.card-body {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+}
