@@ -4,6 +4,7 @@ import { LoginComponent } from './pages/login/login.component';
 import { authGuard } from './services/guard/auth.guard';
 import { loginGuard } from './services/guard/login.guard';
 import { LogoutComponent } from './pages/logout/logout.component';
+import { NotFoundComponent } from './pages/not-found/not-found/not-found.component';
 
 const routes: Routes = [
   {
@@ -29,7 +30,7 @@ const routes: Routes = [
   },
   {
     path: '**',
-    redirectTo: 'login',
+    component: NotFoundComponent,
     pathMatch: 'full',
   },
 ];

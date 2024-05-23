@@ -14,9 +14,10 @@ import { FormsModule } from '@angular/forms';
 import { HttpTokenInterceptor } from './services/interceptor/http-token.interceptor';
 import { SharedModule } from './modules/shared/shared/shared.module';
 import { LogoutComponent } from './pages/logout/logout.component';
+import { NotFoundComponent } from './pages/not-found/not-found/not-found.component';
 
 @NgModule({
-  declarations: [AppComponent, LoginComponent, LogoutComponent],
+  declarations: [AppComponent, LoginComponent, LogoutComponent, NotFoundComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
