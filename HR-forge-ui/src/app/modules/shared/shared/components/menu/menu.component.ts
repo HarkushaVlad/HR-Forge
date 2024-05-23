@@ -1,16 +1,18 @@
-import { Component, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { NavigationEnd, Router } from '@angular/router';
 import { TokenService } from '../../../../../services/token/token.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-menu',
   templateUrl: './menu.component.html',
   styleUrl: './menu.component.scss',
 })
-export class MenuComponent implements OnInit {
+export class MenuComponent implements OnInit, OnDestroy {
   isCollapsed = true;
   isLoginPage = true;
   isHr = false;
+  private routerSubscription: Subscription | undefined;
 
   constructor(
     private router: Router,
@@ -18,20 +20,29 @@ export class MenuComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.isLoginPage = this.checkIsLoginPage();
-    this.isHr = this.checkIsHr();
+    this.routerSubscription = this.router.events.subscribe((event) => {
+      if (event instanceof NavigationEnd) {
+        this.checkIsLoginPage();
+        this.checkIsHr();
+      }
+    });
   }
 
-  private checkIsLoginPage(): boolean {
+  ngOnDestroy(): void {
+    if (this.routerSubscription) {
+      this.routerSubscription.unsubscribe();
+    }
+  }
+
+  private checkIsLoginPage() {
     const currUrl = this.router.routerState.snapshot.url;
-    return currUrl.startsWith('/login');
+    this.isLoginPage = currUrl.startsWith('/login');
   }
 
-  private checkIsHr(): boolean {
+  private checkIsHr() {
     const authorities = this.tokenService.getAuthorities();
-    return (
+    this.isHr =
       authorities.includes('System Administrator') ||
-      authorities.includes('HR Manager')
-    );
+      authorities.includes('HR Manager');
   }
 }
