@@ -1,5 +1,5 @@
 <nav class="navbar navbar-expand-lg navbar-light px-4">
-  <a class="navbar-brand" routerLink="">
+  <a class="navbar-brand" routerLink="/company">
     <img src="assets/logo_text.png" alt="Logo">
   </a>
   <button *ngIf="!isLoginPage" class="navbar-toggler" type="button" (click)="isCollapsed = !isCollapsed">
@@ -8,10 +8,10 @@
   <div *ngIf="!isLoginPage" [collapse]="isCollapsed" class="collapse navbar-collapse justify-content-end">
     <ul class="navbar-nav ml-auto">
       <li class="nav-item">
-        <a class="nav-link" routerLink="/profile"><i class="fas fa-user"></i>&nbsp;My Profile</a>
+        <a class="nav-link" routerLink="/company/profile"><i class="fas fa-user"></i>&nbsp;My Profile</a>
       </li>
       <li *ngIf="isHr" class="nav-item">
-        <a class="nav-link" routerLink=""><i class="fas fa-briefcase"></i>&nbsp;Workspace</a>
+        <a class="nav-link" routerLink="/company/workspace"><i class="fas fa-briefcase"></i>&nbsp;Workspace</a>
       </li>
       <li class="nav-item">
         <a class="nav-link" routerLink="/logout"><i class="fas fa-sign-out-alt"></i>&nbsp;Logout</a>

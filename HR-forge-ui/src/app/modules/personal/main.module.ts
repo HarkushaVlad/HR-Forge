@@ -6,9 +6,10 @@ import { ProfileComponent } from './pages/profile/profile.component';
 import { FormsModule } from '@angular/forms';
 import { ModalModule } from 'ngx-bootstrap/modal';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { WorkspaceComponent } from './pages/workspace/workspace.component';
 
 @NgModule({
-  declarations: [ProfileComponent],
+  declarations: [ProfileComponent, WorkspaceComponent],
   imports: [
     CommonModule,
     MainRoutingModule,

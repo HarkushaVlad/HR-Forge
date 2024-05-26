@@ -24,7 +24,7 @@ export class LoginComponent {
     this.authService.authenticate({ body: this.authRequest }).subscribe({
       next: (res) => {
         this.tokenService.token = res.token as string;
-        this.router.navigate(['/profile']);
+        this.router.navigate(['/company/profile']);
       },
       error: (err) => {
         if (err.error.validationErrors) {
