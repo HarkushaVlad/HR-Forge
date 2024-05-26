@@ -62,11 +62,10 @@ public class DepartmentService {
 
   public Department update(Long id, DepartmentRequest departmentRequest) {
     checkDepartmentNameIsFree(departmentRequest.getName(), id);
-    Department department =
-        departmentRepository.findById(id).orElseThrow(() -> new DepartmentNotFoundException(id));
+    departmentRepository.findById(id).orElseThrow(() -> new DepartmentNotFoundException(id));
     Department updatedDepartment = modelMapper.map(departmentRequest, Department.class);
     updatedDepartment.setDepartmentId(id);
-    return departmentRepository.save(department);
+    return departmentRepository.save(updatedDepartment);
   }
 
   public Department update(String departmentName, DepartmentRequest departmentRequest) {
@@ -77,7 +76,7 @@ public class DepartmentService {
     checkDepartmentNameIsFree(departmentRequest.getName(), department.getDepartmentId());
     Department updatedDepartment = modelMapper.map(departmentRequest, Department.class);
     updatedDepartment.setDepartmentId(department.getDepartmentId());
-    return departmentRepository.save(department);
+    return departmentRepository.save(updatedDepartment);
   }
 
   public void deleteById(Long id) {

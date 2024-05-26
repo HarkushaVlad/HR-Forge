@@ -62,11 +62,10 @@ public class PositionService {
 
   public Position update(Long id, PositionRequest positionRequest) {
     checkPositionNameIsFree(positionRequest.getName(), id);
-    Position position =
-        positionRepository.findById(id).orElseThrow(() -> new PositionNotFoundException(id));
+    positionRepository.findById(id).orElseThrow(() -> new PositionNotFoundException(id));
     Position updatedPosition = modelMapper.map(positionRequest, Position.class);
     updatedPosition.setPositionId(id);
-    return positionRepository.save(position);
+    return positionRepository.save(updatedPosition);
   }
 
   public Position update(String positionName, PositionRequest positionRequest) {
@@ -77,7 +76,7 @@ public class PositionService {
     checkPositionNameIsFree(positionRequest.getName(), position.getPositionId());
     Position updatedPosition = modelMapper.map(positionRequest, Position.class);
     updatedPosition.setPositionId(position.getPositionId());
-    return positionRepository.save(position);
+    return positionRepository.save(updatedPosition);
   }
 
   public void deleteById(Long id) {
