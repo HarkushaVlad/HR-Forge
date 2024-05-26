@@ -17,7 +17,12 @@ import { LogoutComponent } from './pages/logout/logout.component';
 import { NotFoundComponent } from './pages/not-found/not-found/not-found.component';
 
 @NgModule({
-  declarations: [AppComponent, LoginComponent, LogoutComponent, NotFoundComponent],
+  declarations: [
+    AppComponent,
+    LoginComponent,
+    LogoutComponent,
+    NotFoundComponent,
+  ],
   imports: [
     BrowserModule,
     AppRoutingModule,

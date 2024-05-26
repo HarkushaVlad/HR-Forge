@@ -1,0 +1,14 @@
+<div class="card">
+  <div class="copy-body" [ngClass]="{'visible': isCopied}">
+    <p>Copied</p>
+  </div>
+  <div class="card-body">
+    <p class="name" (click)="copyToClipboard(department.name)">
+      <strong>Department:</strong> {{ department.name }}
+    </p>
+    <p class="description" (click)="copyToClipboard(department.description)">
+      <strong>Description:</strong> {{ department.description | truncate:50 }}
+    </p>
+    <button (click)="editDepartment()" class="btn btn-primary">Edit</button>
+  </div>
+</div>

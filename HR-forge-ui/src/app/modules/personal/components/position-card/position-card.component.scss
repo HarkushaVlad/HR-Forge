@@ -1,0 +1,32 @@
+.card-body {
+  position: relative;
+  display: flex;
+  gap: 10px;
+  height: 185px;
+  flex-direction: column;
+  width: 280px;
+  justify-content: space-between;
+  overflow-wrap: break-word;
+
+  .name, .description {
+    margin: 0;
+  }
+
+  .name:hover, .description:hover {
+    cursor: pointer;
+  }
+
+  .btn {
+    max-width: 100px;
+  }
+}
+
+@media (max-width: 290px) {
+  .card-body {
+    width: 250px;
+  }
+}
+
+.card:hover {
+  border-color: #0b5ed7;
+}

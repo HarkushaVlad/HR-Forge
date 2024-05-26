@@ -4,7 +4,11 @@ import { Pipe, PipeTransform } from '@angular/core';
   name: 'truncate',
 })
 export class TruncatePipe implements PipeTransform {
-  transform(value: string, maxLength: number): string {
+  transform(value: string | undefined, maxLength: number): string {
+    if (value === undefined) {
+      return '';
+    }
+
     if (!value || value.length <= maxLength) {
       return value;
     } else {

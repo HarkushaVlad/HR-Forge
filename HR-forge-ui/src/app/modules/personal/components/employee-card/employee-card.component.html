@@ -1,0 +1,17 @@
+<div class="card">
+  <div class="copy-body" [ngClass]="{'visible': isCopied}">
+    <p>Copied</p>
+  </div>
+  <div class="card-body">
+    <h5 class="name"
+        (click)="copyToClipboard(employee.firstName + ' ' + employee.lastName)">{{ employee.firstName }} {{ employee.lastName }}</h5>
+    <h6 class="position" (click)="copyToClipboard(employee.positionName)">{{ employee.positionName }}</h6>
+    <p class="department" (click)="copyToClipboard(employee.departmentName)">
+      <strong>Department:</strong> {{ employee.departmentName }}</p>
+    <p class="salary" (click)="copyToClipboard(employee.salary?.toString())"><strong>Salary:</strong>
+      ${{ employee.salary }}</p>
+    <p class="hireDate" (click)="copyToClipboard(employee.hireDate?.slice(0, 10))"><strong>Hire
+      Date:</strong> {{ employee.hireDate | date }}</p>
+    <button (click)="editEmployee()" class="btn btn-primary">Edit</button>
+  </div>
+</div>
