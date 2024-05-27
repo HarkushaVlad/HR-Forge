@@ -25,6 +25,7 @@ export class WorkspaceComponent implements OnInit {
   level: string | null = null;
   page = 0;
   size = 10;
+  searchTerm: string = '';
   sortField = 'firstName';
   sortDirection = 'ASC';
   sortFields: string[] = [];
@@ -60,6 +61,7 @@ export class WorkspaceComponent implements OnInit {
 
   changeOption(event: any): void {
     this.selectedOption = event.target.value;
+    this.searchTerm = '';
     this.updateSortFields();
     this.loadData();
   }
@@ -88,10 +90,21 @@ export class WorkspaceComponent implements OnInit {
     this.loadData();
   }
 
+  search(): void {
+    this.page = 0;
+    this.loadData();
+  }
+
+  clearSearch(): void {
+    this.searchTerm = '';
+    this.search();
+  }
+
   loadEmployees(): void {
     this.isLoading = true;
     this.employeeService
-      .getAllEmployees({
+      .searchEmployees({
+        query: this.searchTerm,
         page: this.page,
         size: this.size,
         sortField: this.sortField,
@@ -117,7 +130,8 @@ export class WorkspaceComponent implements OnInit {
   loadDepartments(): void {
     this.isLoading = true;
     this.departmentService
-      .getAllDepartments({
+      .searchDepartmentsByName({
+        name: this.searchTerm,
         page: this.page,
         size: this.size,
         sortField: this.sortField,
@@ -143,7 +157,8 @@ export class WorkspaceComponent implements OnInit {
   loadPositions(): void {
     this.isLoading = true;
     this.positionService
-      .getAllPositions({
+      .searchPositionsByName({
+        name: this.searchTerm,
         page: this.page,
         size: this.size,
         sortField: this.sortField,

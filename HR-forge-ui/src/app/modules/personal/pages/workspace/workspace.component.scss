@@ -125,3 +125,73 @@ input[type="radio"]:checked + .radio-label {
     flex-direction: column;
   }
 }
+
+.search-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 20px;
+}
+
+.search-container-buttons {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.search-container input[type="text"] {
+  width: 250px;
+  padding: 8px;
+  border: 1px solid #dddddd;
+  border-radius: 5px;
+  outline: none;
+  transition: border-color 0.3s ease;
+  font-size: 1em;
+}
+
+.search-container input[type="text"]:hover {
+  border-color: #007bff;
+}
+
+.search-container input[type="text"]:focus {
+  border-color: #007bff;
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+.search-container button {
+  padding: 8px 12px;
+  border: 1px solid #007bff;
+  border-radius: 5px;
+  background-color: #007bff;
+  color: white;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.search-container button:hover {
+  background-color: #0056b3;
+}
+
+.search-container button:last-child:hover {
+  background-color: #a0a0a0;
+}
+
+@media (max-width: 500px) {
+  .search-container {
+    flex-direction: column;
+  }
+
+  .search-container-buttons {
+    flex-direction: row-reverse;
+  }
+
+  .search-container button {
+    width: 112px;
+  }
+
+  .search-container input[type="text"] {
+    width: 235px;
+    padding: 6px;
+  }
+}
+

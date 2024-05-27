@@ -16,8 +16,16 @@
     <label for="positions" class="radio-label" [class.disabled]="!isAdmin">Positions</label>
   </div>
 
+  <div class="search-container">
+    <input type="text" placeholder="Enter a name..." [(ngModel)]="searchTerm" (keyup.enter)="search()">
+    <div class="search-container-buttons">
+      <button (click)="search()">Search</button>
+      <button (click)="clearSearch()">Clear</button>
+    </div>
+  </div>
+
+
   <div class="sort-options">
-    <label for="sortField">Sort by:</label>
     <select id="sortField" [(ngModel)]="sortField" (change)="onSortChange()">
       <option *ngFor="let field of sortFields" [value]="field">{{ field | fieldNameFormat }}</option>
     </select>
