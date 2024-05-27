@@ -64,6 +64,13 @@
   background-color: #f0f0f0;
 }
 
+.radio-label.disabled {
+  background-color: #f0f0f0;
+  color: #a0a0a0;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
 @media (max-width: 290px) {
   .radio-label {
     font-size: 0.9em;

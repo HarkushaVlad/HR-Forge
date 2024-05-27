@@ -8,6 +8,7 @@ import { PageResponseDepartmentResponse } from '../../../../services/models/page
 import { PositionResponse } from '../../../../services/models/position-response';
 import { PageResponsePositionResponse } from '../../../../services/models/page-response-position-response';
 import { PositionService } from '../../../../services/services/position.service';
+import { TokenService } from '../../../../services/token/token.service';
 
 @Component({
   selector: 'app-workspace',
@@ -19,6 +20,7 @@ export class WorkspaceComponent implements OnInit {
   departmentResponse?: PageResponseDepartmentResponse;
   positionResponse?: PageResponsePositionResponse;
 
+  isAdmin = false;
   message: string | null = null;
   level: string | null = null;
   page = 0;
@@ -35,11 +37,13 @@ export class WorkspaceComponent implements OnInit {
   constructor(
     private employeeService: EmployeeService,
     private departmentService: DepartmentService,
-    private positionService: PositionService
+    private positionService: PositionService,
+    private tokenService: TokenService
   ) {}
 
   ngOnInit(): void {
     this.changeOption({ target: { value: 'employees' } });
+    this.checkIsAdmin();
   }
 
   loadData(): void {
@@ -204,5 +208,10 @@ export class WorkspaceComponent implements OnInit {
   editPosition(position: PositionResponse): void {
     // Logic to handle editing employee
     console.log('Edit position', position);
+  }
+
+  private checkIsAdmin() {
+    const authorities = this.tokenService.getAuthorities();
+    this.isAdmin = authorities.includes('System Administrator');
   }
 }

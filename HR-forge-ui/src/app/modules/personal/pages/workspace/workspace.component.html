@@ -7,11 +7,13 @@
     <input type="radio" id="employees" name="option" value="employees" checked (change)="changeOption($event)">
     <label for="employees" class="radio-label">Employees</label>
 
-    <input type="radio" id="departments" name="option" value="departments" (change)="changeOption($event)">
-    <label for="departments" class="radio-label">Departments</label>
+    <input type="radio" id="departments" name="option" value="departments" (change)="changeOption($event)"
+           [disabled]="!isAdmin">
+    <label for="departments" class="radio-label" [class.disabled]="!isAdmin">Departments</label>
 
-    <input type="radio" id="positions" name="option" value="positions" (change)="changeOption($event)">
-    <label for="positions" class="radio-label">Positions</label>
+    <input type="radio" id="positions" name="option" value="positions" (change)="changeOption($event)"
+           [disabled]="!isAdmin">
+    <label for="positions" class="radio-label" [class.disabled]="!isAdmin">Positions</label>
   </div>
 
   <div class="sort-options">
@@ -37,13 +39,13 @@
                          (edit)="editEmployee($event)"></app-employee-card>
     </div>
   </div>
-  <div *ngIf="selectedOption === 'departments' && !isLoading">
+  <div *ngIf="selectedOption === 'departments' && !isLoading && isAdmin">
     <div class="department-container">
       <app-department-card *ngFor="let department of departmentResponse?.content" [department]="department"
                            (edit)="editDepartment($event)"></app-department-card>
     </div>
   </div>
-  <div *ngIf="selectedOption === 'positions' && !isLoading">
+  <div *ngIf="selectedOption === 'positions' && !isLoading && isAdmin">
     <div class="position-container">
       <app-position-card *ngFor="let position of positionResponse?.content" [position]="position"
                          (edit)="editPosition($event)"></app-position-card>
