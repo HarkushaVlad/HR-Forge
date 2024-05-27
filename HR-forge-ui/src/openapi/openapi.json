@@ -762,6 +762,84 @@
         }
       }
     },
+    "/position/search": {
+      "get": {
+        "tags": [
+          "Position"
+        ],
+        "summary": "Search positions by name",
+        "description": "Endpoint for searching positions by a part of their name.",
+        "operationId": "searchPositionsByName",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "query",
+            "description": "Part of the position name",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "Engineer"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page number",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 0
+            },
+            "example": 0
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "Page size",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 10
+            },
+            "example": 10
+          },
+          {
+            "name": "sortField",
+            "in": "query",
+            "description": "Field to sort by",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "name"
+          },
+          {
+            "name": "sortDirection",
+            "in": "query",
+            "description": "Sort direction (ASC or DESC)",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "ASC"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PageResponsePositionResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/employee": {
       "get": {
         "tags": [
@@ -823,6 +901,162 @@
               "application/json": {
                 "schema": {
                   "$ref": "#/components/schemas/PageResponseEmployeeResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/employee/search": {
+      "get": {
+        "tags": [
+          "Employee"
+        ],
+        "summary": "Search employees by name or surname",
+        "description": "Endpoint for searching employees by part of their first or last name with pagination and sorting.",
+        "operationId": "searchEmployees",
+        "parameters": [
+          {
+            "name": "query",
+            "in": "query",
+            "description": "Part of first or last name",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "John"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page number",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 0
+            },
+            "example": 0
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "Page size",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 10
+            },
+            "example": 10
+          },
+          {
+            "name": "sortField",
+            "in": "query",
+            "description": "Field to sort by",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "firstName"
+          },
+          {
+            "name": "sortDirection",
+            "in": "query",
+            "description": "Sort direction (ASC or DESC)",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "ASC"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PageResponseEmployeeResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/department/search": {
+      "get": {
+        "tags": [
+          "Department"
+        ],
+        "summary": "Search departments by name",
+        "description": "Endpoint for searching departments by a part of their name.",
+        "operationId": "searchDepartmentsByName",
+        "parameters": [
+          {
+            "name": "name",
+            "in": "query",
+            "description": "Part of the department name",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "Finance"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "Page number",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 0
+            },
+            "example": 0
+          },
+          {
+            "name": "size",
+            "in": "query",
+            "description": "Page size",
+            "required": false,
+            "schema": {
+              "type": "integer",
+              "format": "int32",
+              "default": 10
+            },
+            "example": 10
+          },
+          {
+            "name": "sortField",
+            "in": "query",
+            "description": "Field to sort by",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "name"
+          },
+          {
+            "name": "sortDirection",
+            "in": "query",
+            "description": "Sort direction (ASC or DESC)",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "ASC"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/PageResponseDepartmentResponse"
                 }
               }
             }

@@ -64,6 +64,27 @@ public class EmployeeService {
         employees.isLast());
   }
 
+  public PageResponse<EmployeeResponse> searchEmployees(
+      String query, int page, int size, String sortField, Sort.Direction sortDirection) {
+    Sort sortBy = Sort.by(sortDirection, sortField);
+    Pageable pageable = PageRequest.of(page, size, sortBy);
+    Page<Employee> employees =
+        employeeRepository.findByFirstNameContainingIgnoreCaseOrLastNameContainingIgnoreCase(
+            query, query, pageable);
+    List<EmployeeResponse> employeeResponses =
+        employees.stream()
+            .map(employee -> modelMapper.map(employee, EmployeeResponse.class))
+            .toList();
+    return new PageResponse<>(
+        employeeResponses,
+        employees.getNumber(),
+        employees.getSize(),
+        employees.getTotalElements(),
+        employees.getTotalPages(),
+        employees.isFirst(),
+        employees.isLast());
+  }
+
   public void create(RegistrationRequest registrationRequest) {
     checkEmailIsFree(registrationRequest.getEmail());
     Position employeePosition =

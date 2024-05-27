@@ -19,6 +19,8 @@ import { GetAllDepartments$Params } from '../fn/department/get-all-departments';
 import { getDepartment } from '../fn/department/get-department';
 import { GetDepartment$Params } from '../fn/department/get-department';
 import { PageResponseDepartmentResponse } from '../models/page-response-department-response';
+import { searchDepartmentsByName } from '../fn/department/search-departments-by-name';
+import { SearchDepartmentsByName$Params } from '../fn/department/search-departments-by-name';
 import { updateDepartment } from '../fn/department/update-department';
 import { UpdateDepartment$Params } from '../fn/department/update-department';
 
@@ -206,6 +208,39 @@ export class DepartmentService extends BaseService {
       map((r: StrictHttpResponse<{
 }>): {
 } => r.body)
+    );
+  }
+
+  /** Path part for operation `searchDepartmentsByName()` */
+  static readonly SearchDepartmentsByNamePath = '/department/search';
+
+  /**
+   * Search departments by name.
+   *
+   * Endpoint for searching departments by a part of their name.
+   *
+   * This method provides access to the full `HttpResponse`, allowing access to response headers.
+   * To access only the response body, use `searchDepartmentsByName()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  searchDepartmentsByName$Response(params: SearchDepartmentsByName$Params, context?: HttpContext): Observable<StrictHttpResponse<PageResponseDepartmentResponse>> {
+    return searchDepartmentsByName(this.http, this.rootUrl, params, context);
+  }
+
+  /**
+   * Search departments by name.
+   *
+   * Endpoint for searching departments by a part of their name.
+   *
+   * This method provides access only to the response body.
+   * To access the full response (for headers, for example), `searchDepartmentsByName$Response()` instead.
+   *
+   * This method doesn't expect any request body.
+   */
+  searchDepartmentsByName(params: SearchDepartmentsByName$Params, context?: HttpContext): Observable<PageResponseDepartmentResponse> {
+    return this.searchDepartmentsByName$Response(params, context).pipe(
+      map((r: StrictHttpResponse<PageResponseDepartmentResponse>): PageResponseDepartmentResponse => r.body)
     );
   }
 

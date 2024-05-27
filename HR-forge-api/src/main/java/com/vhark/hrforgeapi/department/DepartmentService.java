@@ -53,6 +53,26 @@ public class DepartmentService {
         departments.isLast());
   }
 
+  public PageResponse<DepartmentResponse> searchByName(
+      String name, int page, int size, String sortField, Sort.Direction sortDirection) {
+    Sort sortBy = Sort.by(sortDirection, sortField);
+    Pageable pageable = PageRequest.of(page, size, sortBy);
+    Page<Department> departments =
+        departmentRepository.findByNameContainingIgnoreCase(name, pageable);
+    List<DepartmentResponse> departmentResponses =
+        departments.stream()
+            .map(department -> modelMapper.map(department, DepartmentResponse.class))
+            .toList();
+    return new PageResponse<>(
+        departmentResponses,
+        departments.getNumber(),
+        departments.getSize(),
+        departments.getTotalElements(),
+        departments.getTotalPages(),
+        departments.isFirst(),
+        departments.isLast());
+  }
+
   public void create(DepartmentRequest departmentRequest) {
     checkDepartmentNameIsFree(departmentRequest.getName());
     Department department = modelMapper.map(departmentRequest, Department.class);

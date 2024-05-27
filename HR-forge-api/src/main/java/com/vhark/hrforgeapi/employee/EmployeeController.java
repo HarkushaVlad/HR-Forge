@@ -71,6 +71,39 @@ public class EmployeeController {
   }
 
   @Operation(
+      summary = "Search employees by name or surname",
+      description =
+          "Endpoint for searching employees by part of their first or last name with pagination and sorting.",
+      parameters = {
+        @Parameter(name = "query", description = "Part of first or last name", example = "John"),
+        @Parameter(name = "page", description = "Page number", example = "0"),
+        @Parameter(name = "size", description = "Page size", example = "10"),
+        @Parameter(
+            name = "sortField",
+            description = "Field to sort by",
+            example = "firstName",
+            schema = @Schema(implementation = String.class)),
+        @Parameter(
+            name = "sortDirection",
+            description = "Sort direction (ASC or DESC)",
+            example = "ASC",
+            schema = @Schema(implementation = String.class))
+      },
+      operationId = "searchEmployees")
+  @GetMapping(value = "/search", produces = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<PageResponse<EmployeeResponse>> searchEmployees(
+      @RequestParam(name = "query") String query,
+      @RequestParam(name = "page", defaultValue = "0") int page,
+      @RequestParam(name = "size", defaultValue = "10") int size,
+      @RequestParam(name = "sortField", defaultValue = "firstName") String sortField,
+      @RequestParam(name = "sortDirection", defaultValue = "ASC") String sortDirection) {
+    Sort.Direction direction =
+        sortDirection.equalsIgnoreCase("DESC") ? Sort.Direction.DESC : Sort.Direction.ASC;
+    return ResponseEntity.ok(
+        employeeService.searchEmployees(query, page, size, sortField, direction));
+  }
+
+  @Operation(
       summary = "Update employee details",
       description = "Endpoint for updating employee details by ID or email.",
       parameters = {@Parameter(name = "id-or-email", description = "Employee ID or email")},

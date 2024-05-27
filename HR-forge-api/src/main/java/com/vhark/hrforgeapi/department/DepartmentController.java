@@ -72,6 +72,38 @@ public class DepartmentController {
   }
 
   @Operation(
+      summary = "Search departments by name",
+      description = "Endpoint for searching departments by a part of their name.",
+      parameters = {
+        @Parameter(name = "name", description = "Part of the department name", example = "Finance"),
+        @Parameter(name = "page", description = "Page number", example = "0"),
+        @Parameter(name = "size", description = "Page size", example = "10"),
+        @Parameter(
+            name = "sortField",
+            description = "Field to sort by",
+            example = "name",
+            schema = @Schema(implementation = String.class)),
+        @Parameter(
+            name = "sortDirection",
+            description = "Sort direction (ASC or DESC)",
+            example = "ASC",
+            schema = @Schema(implementation = String.class))
+      },
+      operationId = "searchDepartmentsByName")
+  @GetMapping(value = "/search", produces = MediaType.APPLICATION_JSON_VALUE)
+  public ResponseEntity<PageResponse<DepartmentResponse>> searchByName(
+      @RequestParam(name = "name") String name,
+      @RequestParam(name = "page", defaultValue = "0") int page,
+      @RequestParam(name = "size", defaultValue = "10") int size,
+      @RequestParam(name = "sortField", defaultValue = "name") String sortField,
+      @RequestParam(name = "sortDirection", defaultValue = "ASC") String sortDirection) {
+    Sort.Direction direction =
+        sortDirection.equalsIgnoreCase("DESC") ? Sort.Direction.DESC : Sort.Direction.ASC;
+    return ResponseEntity.ok(
+        departmentService.searchByName(name, page, size, sortField, direction));
+  }
+
+  @Operation(
       summary = "Create department",
       description = "Endpoint for creating a new department.",
       requestBody =
