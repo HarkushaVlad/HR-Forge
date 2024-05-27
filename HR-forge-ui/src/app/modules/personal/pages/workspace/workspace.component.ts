@@ -25,6 +25,7 @@ export class WorkspaceComponent implements OnInit {
   size = 10;
   sortField = 'firstName';
   sortDirection = 'ASC';
+  sortFields: string[] = [];
   pages: number[] = [];
   isLastPage = false;
 
@@ -38,7 +39,7 @@ export class WorkspaceComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.loadEmployees();
+    this.changeOption({ target: { value: 'employees' } });
   }
 
   loadData(): void {
@@ -55,93 +56,139 @@ export class WorkspaceComponent implements OnInit {
 
   changeOption(event: any): void {
     this.selectedOption = event.target.value;
+    this.updateSortFields();
+    this.loadData();
+  }
+
+  updateSortFields(): void {
+    if (this.selectedOption === 'employees') {
+      this.sortFields = [
+        'departmentName',
+        'firstName',
+        'hireDate',
+        'lastName',
+        'positionName',
+        'salary',
+      ];
+      this.sortField = 'firstName';
+    } else if (this.selectedOption === 'departments') {
+      this.sortFields = ['description', 'name'];
+      this.sortField = 'name';
+    } else if (this.selectedOption === 'positions') {
+      this.sortFields = ['description', 'name'];
+      this.sortField = 'name';
+    }
+  }
+
+  onSortChange(): void {
     this.loadData();
   }
 
   loadEmployees(): void {
     this.isLoading = true;
-    this.employeeService.getAllEmployees({}).subscribe({
-      next: (response) => {
-        this.employeeResponse = response;
-        this.pages = Array(response.totalPages ?? 0)
-          .fill(0)
-          .map((x, i) => i);
-        this.isLastPage = this.page === (response.totalPages ?? 0) - 1;
-        this.isLoading = false;
-      },
-      error: () => {
-        this.message = 'Failed to load employees';
-        this.level = 'error';
-        this.isLoading = false;
-      },
-    });
+    this.employeeService
+      .getAllEmployees({
+        page: this.page,
+        size: this.size,
+        sortField: this.sortField,
+        sortDirection: this.sortDirection,
+      })
+      .subscribe({
+        next: (response) => {
+          this.employeeResponse = response;
+          this.pages = Array(response.totalPages ?? 0)
+            .fill(0)
+            .map((x, i) => i);
+          this.isLastPage = this.page === (response.totalPages ?? 0) - 1;
+          this.isLoading = false;
+        },
+        error: () => {
+          this.message = 'Failed to load employees';
+          this.level = 'error';
+          this.isLoading = false;
+        },
+      });
   }
 
   loadDepartments(): void {
     this.isLoading = true;
-    this.departmentService.getAllDepartments({}).subscribe({
-      next: (response) => {
-        this.departmentResponse = response;
-        this.pages = Array(response.totalPages ?? 0)
-          .fill(0)
-          .map((x, i) => i);
-        this.isLastPage = this.page === (response.totalPages ?? 0) - 1;
-        this.isLoading = false;
-      },
-      error: () => {
-        this.message = 'Failed to load departments';
-        this.level = 'error';
-        this.isLoading = false;
-      },
-    });
+    this.departmentService
+      .getAllDepartments({
+        page: this.page,
+        size: this.size,
+        sortField: this.sortField,
+        sortDirection: this.sortDirection,
+      })
+      .subscribe({
+        next: (response) => {
+          this.departmentResponse = response;
+          this.pages = Array(response.totalPages ?? 0)
+            .fill(0)
+            .map((x, i) => i);
+          this.isLastPage = this.page === (response.totalPages ?? 0) - 1;
+          this.isLoading = false;
+        },
+        error: () => {
+          this.message = 'Failed to load departments';
+          this.level = 'error';
+          this.isLoading = false;
+        },
+      });
   }
 
   loadPositions(): void {
     this.isLoading = true;
-    this.positionService.getAllPositions({}).subscribe({
-      next: (response) => {
-        this.positionResponse = response;
-        this.pages = Array(response.totalPages ?? 0)
-          .fill(0)
-          .map((x, i) => i);
-        this.isLastPage = this.page === (response.totalPages ?? 0) - 1;
-        this.isLoading = false;
-      },
-      error: () => {
-        this.message = 'Failed to load positions';
-        this.level = 'error';
-        this.isLoading = false;
-      },
-    });
+    this.positionService
+      .getAllPositions({
+        page: this.page,
+        size: this.size,
+        sortField: this.sortField,
+        sortDirection: this.sortDirection,
+      })
+      .subscribe({
+        next: (response) => {
+          this.positionResponse = response;
+          this.pages = Array(response.totalPages ?? 0)
+            .fill(0)
+            .map((x, i) => i);
+          this.isLastPage = this.page === (response.totalPages ?? 0) - 1;
+          this.isLoading = false;
+        },
+        error: () => {
+          this.message = 'Failed to load positions';
+          this.level = 'error';
+          this.isLoading = false;
+        },
+      });
   }
 
   goToFirstPage(): void {
     this.page = 0;
-    this.loadEmployees();
+    this.loadData();
   }
 
   goToPreviousPage(): void {
     if (this.page > 0) {
       this.page--;
-      this.loadEmployees();
+      this.loadData();
     }
   }
 
   goToPage(pageIndex: number): void {
     this.page = pageIndex;
-    this.loadEmployees();
+    this.loadData();
   }
 
   goToNextPage(): void {
     if (!this.isLastPage) {
       this.page++;
-      this.loadEmployees();
+      this.loadData();
     }
   }
 
   goToLastPage(): void {
     this.page = this.pages.length - 1;
-    this.loadEmployees();
+    this.loadData();
   }
 
   editEmployee(employee: EmployeeResponse): void {

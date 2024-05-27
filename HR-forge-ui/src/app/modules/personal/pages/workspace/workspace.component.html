@@ -14,6 +14,17 @@
     <label for="positions" class="radio-label">Positions</label>
   </div>
 
+  <div class="sort-options">
+    <label for="sortField">Sort by:</label>
+    <select id="sortField" [(ngModel)]="sortField" (change)="onSortChange()">
+      <option *ngFor="let field of sortFields" [value]="field">{{ field | fieldNameFormat }}</option>
+    </select>
+    <select id="sortDirection" [(ngModel)]="sortDirection" (change)="onSortChange()">
+      <option value="ASC">Ascending</option>
+      <option value="DESC">Descending</option>
+    </select>
+  </div>
+
   <div class="text-center mt-5" *ngIf="isLoading">
     <div class="spinner-border text-primary" role="status">
       <span class="visually-hidden">Loading...</span>
