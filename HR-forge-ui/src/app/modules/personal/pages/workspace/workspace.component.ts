@@ -103,7 +103,7 @@ export class WorkspaceComponent implements OnInit {
   loadEmployees(): void {
     this.isLoading = true;
     this.employeeService
-      .searchEmployees({
+      .getAllEmployees({
         query: this.searchTerm,
         page: this.page,
         size: this.size,
@@ -130,7 +130,7 @@ export class WorkspaceComponent implements OnInit {
   loadDepartments(): void {
     this.isLoading = true;
     this.departmentService
-      .searchDepartmentsByName({
+      .getAllDepartments({
         name: this.searchTerm,
         page: this.page,
         size: this.size,
@@ -157,7 +157,7 @@ export class WorkspaceComponent implements OnInit {
   loadPositions(): void {
     this.isLoading = true;
     this.positionService
-      .searchPositionsByName({
+      .getAllPositions({
         name: this.searchTerm,
         page: this.page,
         size: this.size,

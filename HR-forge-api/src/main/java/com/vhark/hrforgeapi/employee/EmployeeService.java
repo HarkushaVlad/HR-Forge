@@ -46,25 +46,6 @@ public class EmployeeService {
   }
 
   public PageResponse<EmployeeResponse> findAll(
-      int page, int size, String sortField, Sort.Direction sortDirection) {
-    Sort sortBy = Sort.by(sortDirection, sortField);
-    Pageable pageable = PageRequest.of(page, size, sortBy);
-    Page<Employee> employees = employeeRepository.findAll(pageable);
-    List<EmployeeResponse> employeeResponses =
-        employees.stream()
-            .map(employee -> modelMapper.map(employee, EmployeeResponse.class))
-            .toList();
-    return new PageResponse<>(
-        employeeResponses,
-        employees.getNumber(),
-        employees.getSize(),
-        employees.getTotalElements(),
-        employees.getTotalPages(),
-        employees.isFirst(),
-        employees.isLast());
-  }
-
-  public PageResponse<EmployeeResponse> searchEmployees(
       String query, int page, int size, String sortField, Sort.Direction sortDirection) {
     Sort sortBy = Sort.by(sortDirection, sortField);
     Pageable pageable = PageRequest.of(page, size, sortBy);

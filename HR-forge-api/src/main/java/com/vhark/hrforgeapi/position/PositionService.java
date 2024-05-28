@@ -35,25 +35,6 @@ public class PositionService {
   }
 
   public PageResponse<PositionResponse> findAll(
-      int page, int size, String sortField, Sort.Direction sortDirection) {
-    Sort sortBy = Sort.by(sortDirection, sortField);
-    Pageable pageable = PageRequest.of(page, size, sortBy);
-    Page<Position> positions = positionRepository.findAll(pageable);
-    List<PositionResponse> positionResponses =
-        positions.stream()
-            .map(position -> modelMapper.map(position, PositionResponse.class))
-            .toList();
-    return new PageResponse<>(
-        positionResponses,
-        positions.getNumber(),
-        positions.getSize(),
-        positions.getTotalElements(),
-        positions.getTotalPages(),
-        positions.isFirst(),
-        positions.isLast());
-  }
-
-  public PageResponse<PositionResponse> searchByName(
       String name, int page, int size, String sortField, Sort.Direction sortDirection) {
     Sort sortBy = Sort.by(sortDirection, sortField);
     Pageable pageable = PageRequest.of(page, size, sortBy);

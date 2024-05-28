@@ -19,8 +19,6 @@ import { getPosition } from '../fn/position/get-position';
 import { GetPosition$Params } from '../fn/position/get-position';
 import { PageResponsePositionResponse } from '../models/page-response-position-response';
 import { PositionResponse } from '../models/position-response';
-import { searchPositionsByName } from '../fn/position/search-positions-by-name';
-import { SearchPositionsByName$Params } from '../fn/position/search-positions-by-name';
 import { updatePosition } from '../fn/position/update-position';
 import { UpdatePosition$Params } from '../fn/position/update-position';
 
@@ -154,7 +152,7 @@ export class PositionService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  getAllPositions$Response(params?: GetAllPositions$Params, context?: HttpContext): Observable<StrictHttpResponse<PageResponsePositionResponse>> {
+  getAllPositions$Response(params: GetAllPositions$Params, context?: HttpContext): Observable<StrictHttpResponse<PageResponsePositionResponse>> {
     return getAllPositions(this.http, this.rootUrl, params, context);
   }
 
@@ -168,7 +166,7 @@ export class PositionService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  getAllPositions(params?: GetAllPositions$Params, context?: HttpContext): Observable<PageResponsePositionResponse> {
+  getAllPositions(params: GetAllPositions$Params, context?: HttpContext): Observable<PageResponsePositionResponse> {
     return this.getAllPositions$Response(params, context).pipe(
       map((r: StrictHttpResponse<PageResponsePositionResponse>): PageResponsePositionResponse => r.body)
     );
@@ -208,39 +206,6 @@ export class PositionService extends BaseService {
       map((r: StrictHttpResponse<{
 }>): {
 } => r.body)
-    );
-  }
-
-  /** Path part for operation `searchPositionsByName()` */
-  static readonly SearchPositionsByNamePath = '/position/search';
-
-  /**
-   * Search positions by name.
-   *
-   * Endpoint for searching positions by a part of their name.
-   *
-   * This method provides access to the full `HttpResponse`, allowing access to response headers.
-   * To access only the response body, use `searchPositionsByName()` instead.
-   *
-   * This method doesn't expect any request body.
-   */
-  searchPositionsByName$Response(params: SearchPositionsByName$Params, context?: HttpContext): Observable<StrictHttpResponse<PageResponsePositionResponse>> {
-    return searchPositionsByName(this.http, this.rootUrl, params, context);
-  }
-
-  /**
-   * Search positions by name.
-   *
-   * Endpoint for searching positions by a part of their name.
-   *
-   * This method provides access only to the response body.
-   * To access the full response (for headers, for example), `searchPositionsByName$Response()` instead.
-   *
-   * This method doesn't expect any request body.
-   */
-  searchPositionsByName(params: SearchPositionsByName$Params, context?: HttpContext): Observable<PageResponsePositionResponse> {
-    return this.searchPositionsByName$Response(params, context).pipe(
-      map((r: StrictHttpResponse<PageResponsePositionResponse>): PageResponsePositionResponse => r.body)
     );
   }
 

@@ -17,8 +17,6 @@ import { GetAllEmployees$Params } from '../fn/employee/get-all-employees';
 import { getEmployee } from '../fn/employee/get-employee';
 import { GetEmployee$Params } from '../fn/employee/get-employee';
 import { PageResponseEmployeeResponse } from '../models/page-response-employee-response';
-import { searchEmployees } from '../fn/employee/search-employees';
-import { SearchEmployees$Params } from '../fn/employee/search-employees';
 import { updateEmployee } from '../fn/employee/update-employee';
 import { UpdateEmployee$Params } from '../fn/employee/update-employee';
 import { updateEmployeePassword } from '../fn/employee/update-employee-password';
@@ -191,7 +189,7 @@ export class EmployeeService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  getAllEmployees$Response(params?: GetAllEmployees$Params, context?: HttpContext): Observable<StrictHttpResponse<PageResponseEmployeeResponse>> {
+  getAllEmployees$Response(params: GetAllEmployees$Params, context?: HttpContext): Observable<StrictHttpResponse<PageResponseEmployeeResponse>> {
     return getAllEmployees(this.http, this.rootUrl, params, context);
   }
 
@@ -205,41 +203,8 @@ export class EmployeeService extends BaseService {
    *
    * This method doesn't expect any request body.
    */
-  getAllEmployees(params?: GetAllEmployees$Params, context?: HttpContext): Observable<PageResponseEmployeeResponse> {
+  getAllEmployees(params: GetAllEmployees$Params, context?: HttpContext): Observable<PageResponseEmployeeResponse> {
     return this.getAllEmployees$Response(params, context).pipe(
-      map((r: StrictHttpResponse<PageResponseEmployeeResponse>): PageResponseEmployeeResponse => r.body)
-    );
-  }
-
-  /** Path part for operation `searchEmployees()` */
-  static readonly SearchEmployeesPath = '/employee/search';
-
-  /**
-   * Search employees by name or surname.
-   *
-   * Endpoint for searching employees by part of their first or last name with pagination and sorting.
-   *
-   * This method provides access to the full `HttpResponse`, allowing access to response headers.
-   * To access only the response body, use `searchEmployees()` instead.
-   *
-   * This method doesn't expect any request body.
-   */
-  searchEmployees$Response(params: SearchEmployees$Params, context?: HttpContext): Observable<StrictHttpResponse<PageResponseEmployeeResponse>> {
-    return searchEmployees(this.http, this.rootUrl, params, context);
-  }
-
-  /**
-   * Search employees by name or surname.
-   *
-   * Endpoint for searching employees by part of their first or last name with pagination and sorting.
-   *
-   * This method provides access only to the response body.
-   * To access the full response (for headers, for example), `searchEmployees$Response()` instead.
-   *
-   * This method doesn't expect any request body.
-   */
-  searchEmployees(params: SearchEmployees$Params, context?: HttpContext): Observable<PageResponseEmployeeResponse> {
-    return this.searchEmployees$Response(params, context).pipe(
       map((r: StrictHttpResponse<PageResponseEmployeeResponse>): PageResponseEmployeeResponse => r.body)
     );
   }

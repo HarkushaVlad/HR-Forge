@@ -11,6 +11,11 @@ import { PageResponseEmployeeResponse } from '../../models/page-response-employe
 export interface GetAllEmployees$Params {
 
 /**
+ * Part of first or last name
+ */
+  query: string;
+
+/**
  * Page number
  */
   page?: number;
@@ -31,9 +36,10 @@ export interface GetAllEmployees$Params {
   sortDirection?: string;
 }
 
-export function getAllEmployees(http: HttpClient, rootUrl: string, params?: GetAllEmployees$Params, context?: HttpContext): Observable<StrictHttpResponse<PageResponseEmployeeResponse>> {
+export function getAllEmployees(http: HttpClient, rootUrl: string, params: GetAllEmployees$Params, context?: HttpContext): Observable<StrictHttpResponse<PageResponseEmployeeResponse>> {
   const rb = new RequestBuilder(rootUrl, getAllEmployees.PATH, 'get');
   if (params) {
+    rb.query('query', params.query, {});
     rb.query('page', params.page, {});
     rb.query('size', params.size, {});
     rb.query('sortField', params.sortField, {});

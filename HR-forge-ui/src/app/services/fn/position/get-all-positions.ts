@@ -11,6 +11,11 @@ import { PageResponsePositionResponse } from '../../models/page-response-positio
 export interface GetAllPositions$Params {
 
 /**
+ * Part of the position name
+ */
+  name: string;
+
+/**
  * Page number
  */
   page?: number;
@@ -31,9 +36,10 @@ export interface GetAllPositions$Params {
   sortDirection?: string;
 }
 
-export function getAllPositions(http: HttpClient, rootUrl: string, params?: GetAllPositions$Params, context?: HttpContext): Observable<StrictHttpResponse<PageResponsePositionResponse>> {
+export function getAllPositions(http: HttpClient, rootUrl: string, params: GetAllPositions$Params, context?: HttpContext): Observable<StrictHttpResponse<PageResponsePositionResponse>> {
   const rb = new RequestBuilder(rootUrl, getAllPositions.PATH, 'get');
   if (params) {
+    rb.query('name', params.name, {});
     rb.query('page', params.page, {});
     rb.query('size', params.size, {});
     rb.query('sortField', params.sortField, {});

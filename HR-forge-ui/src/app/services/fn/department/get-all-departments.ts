@@ -11,6 +11,11 @@ import { PageResponseDepartmentResponse } from '../../models/page-response-depar
 export interface GetAllDepartments$Params {
 
 /**
+ * Part of the department name
+ */
+  name: string;
+
+/**
  * Page number
  */
   page?: number;
@@ -31,9 +36,10 @@ export interface GetAllDepartments$Params {
   sortDirection?: string;
 }
 
-export function getAllDepartments(http: HttpClient, rootUrl: string, params?: GetAllDepartments$Params, context?: HttpContext): Observable<StrictHttpResponse<PageResponseDepartmentResponse>> {
+export function getAllDepartments(http: HttpClient, rootUrl: string, params: GetAllDepartments$Params, context?: HttpContext): Observable<StrictHttpResponse<PageResponseDepartmentResponse>> {
   const rb = new RequestBuilder(rootUrl, getAllDepartments.PATH, 'get');
   if (params) {
+    rb.query('name', params.name, {});
     rb.query('page', params.page, {});
     rb.query('size', params.size, {});
     rb.query('sortField', params.sortField, {});
