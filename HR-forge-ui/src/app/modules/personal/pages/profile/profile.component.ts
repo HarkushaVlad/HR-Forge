@@ -1,12 +1,14 @@
+// profile.component.ts
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { PersonalService } from '../../../../services/services/personal.service';
 import { EmployeeResponse } from '../../../../services/models/employee-response';
 import { PersonalRequest } from '../../../../services/models/personal-request';
+import { UpdatePasswordComponent } from '../../components/update-password/update-password.component';
 
 @Component({
   selector: 'app-profile',
   templateUrl: './profile.component.html',
-  styleUrl: './profile.component.scss',
+  styleUrls: ['./profile.component.scss'],
 })
 export class ProfileComponent implements OnInit {
   personalRequest: PersonalRequest = {
@@ -36,6 +38,8 @@ export class ProfileComponent implements OnInit {
   fieldValue?: any;
   isDateField?: boolean;
   @ViewChild('editModal') editModal: any;
+  @ViewChild(UpdatePasswordComponent)
+  updatePasswordComponent!: UpdatePasswordComponent;
 
   constructor(private personalService: PersonalService) {}
 
@@ -77,7 +81,7 @@ export class ProfileComponent implements OnInit {
     this.editModal.show();
   }
 
-  save(): void {
+  onSubmit(): void {
     this.errorMsg = [];
     this.personalRequest[this.currentField as keyof PersonalRequest] =
       this.fieldValue;

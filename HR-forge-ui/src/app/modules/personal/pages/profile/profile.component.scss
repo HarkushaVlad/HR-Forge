@@ -9,6 +9,16 @@
 }
 
 .card-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
   background-color: #f7f7f7;
   border-bottom: 1px solid #ddd;
+}
+
+@media (max-width: 300px) {
+  .card-header {
+    align-items: start;
+    flex-direction: column;
+  }
 }

@@ -2,6 +2,9 @@
   <div class="card mt-3">
     <div class="card-header">
       <h3>Employee Information</h3>
+      <button class="btn btn-sm btn-primary float-right" (click)="updatePasswordComponent.openUpdatePasswordDialog()">
+        <i class="fas fa-key"></i>&nbsp;Update Password
+      </button>
     </div>
     <div class="card-body" *ngIf="!isLoading && !isError">
       <div class="row mb-2">
@@ -69,7 +72,6 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title">Edit {{ fieldName | titlecase }}</h5>
-        <button type="button" class="btn-close" (click)="editModal.hide()"></button>
       </div>
       <div class="text-center mt-5" *ngIf="isLoading">
         <div class="spinner-border text-primary" role="status">
@@ -88,9 +90,11 @@
         </div>
       </div>
       <div class="modal-footer" *ngIf="!isLoading">
-        <button type="button" class="btn btn-secondary" (click)="editModal.hide()">Close</button>
-        <button type="button" class="btn btn-primary" (click)="save()">Save changes</button>
+        <button type="button" class="btn btn-secondary" (click)="editModal.hide()">Cancel</button>
+        <button type="button" class="btn btn-primary" (click)="onSubmit()">Save changes</button>
       </div>
     </div>
   </div>
 </div>
+
+<app-update-password [isPersonal]="true"></app-update-password>
