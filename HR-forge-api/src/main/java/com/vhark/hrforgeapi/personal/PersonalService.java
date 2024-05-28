@@ -37,8 +37,7 @@ public class PersonalService {
 
   public void updatePassword(Authentication authentication, PasswordRequest passwordRequest) {
     Employee employee = ((Employee) authentication.getPrincipal());
-    String oldPasswordHash = passwordEncoder.encode(passwordRequest.getOldPassword());
-    if (!employee.getPasswordHash().equals(oldPasswordHash)) {
+    if (!passwordEncoder.matches(passwordRequest.getOldPassword(), employee.getPasswordHash())) {
       throw new InvalidPasswordException();
     }
     String newPasswordHash = passwordEncoder.encode(passwordRequest.getNewPassword());
