@@ -54,12 +54,12 @@ export class UpdatePasswordComponent {
         .subscribe({
           next: () => {
             this.isLoading = false;
+            this.tokenService.removeToken();
+            window.location.reload();
           },
           error: (err) => {
             this.isLoading = false;
             this.resetForm();
-            this.tokenService.removeToken();
-            window.location.reload();
 
             if (err.error.validationErrors) {
               this.errorMsg = err.error.validationErrors;

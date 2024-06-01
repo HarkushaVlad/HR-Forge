@@ -59,8 +59,8 @@
                          (edit)="editPosition($event)"></app-position-card>
     </div>
   </div>
-  <div class="d-flex justify-content-center mt-3">
-    <nav>
+  <div class="pagination-container">
+    <nav *ngIf="pages.length > 1">
       <ul class="pagination">
         <li class="page-item">
           <a (click)="goToFirstPage()" class="page-link" href="javascript:void(0)" aria-label="Previous"

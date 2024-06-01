@@ -33,10 +33,6 @@ export class HttpTokenInterceptor implements HttpInterceptor {
 
     return next.handle(authReq).pipe(
       catchError((error) => {
-        if (error.status === 403) {
-          this.tokenService.removeToken();
-          this.router.navigate(['/login']);
-        }
         return throwError(error);
       })
     );
