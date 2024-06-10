@@ -5,6 +5,9 @@
       <div class="modal-header">
         <h5 class="modal-title">Edit department</h5>
         <div class="modal-title-buttons">
+          <button type="button" class="btn btn-danger"
+                  (click)="deleteEntityComponent.openDeleteEntityDialog(department)">Delete
+          </button>
           <button type="button" class="btn btn-secondary" (click)="resetForm()">Reset</button>
         </div>
       </div>
@@ -37,3 +40,5 @@
     </div>
   </div>
 </div>
+
+<app-delete-entity *ngIf="department" (deleteSuccess)="updateSuccess.emit()"></app-delete-entity>

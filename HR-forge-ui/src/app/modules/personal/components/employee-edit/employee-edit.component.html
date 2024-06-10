@@ -5,7 +5,12 @@
       <div class="modal-header">
         <h5 class="modal-title">Edit Employee</h5>
         <div class="modal-title-buttons">
-          <button type="button" class="btn btn-primary" (click)="updatePasswordComponent.openUpdatePasswordDialog()" [disabled]="!isAdmin || isOwn">Change Password</button>
+          <button type="button" class="btn btn-danger" (click)="deleteEntityComponent.openDeleteEntityDialog(employee)"
+                  [disabled]="isOwn">Delete
+          </button>
+          <button type="button" class="btn btn-primary" (click)="updatePasswordComponent.openUpdatePasswordDialog()"
+                  [disabled]="!isAdmin || isOwn">Change Password
+          </button>
           <button type="button" class="btn btn-secondary" (click)="resetForm()">Reset</button>
         </div>
       </div>
@@ -31,7 +36,8 @@
           </div>
           <div class="mb-3">
             <label for="email" class="form-label">Email</label>
-            <input type="email" class="form-control" id="email" [disabled]="isOwn" [(ngModel)]="employee.email" name="email">
+            <input type="email" class="form-control" id="email" [disabled]="isOwn" [(ngModel)]="employee.email"
+                   name="email">
           </div>
           <div class="mb-3">
             <label for="birthDate" class="form-label">Birth Date</label>
@@ -67,3 +73,4 @@
 </div>
 
 <app-update-password *ngIf="employee" [isPersonal]="false" [employeeId]="employee.employeeId"></app-update-password>
+<app-delete-entity *ngIf="employee" (deleteSuccess)="updateSuccess.emit()"></app-delete-entity>

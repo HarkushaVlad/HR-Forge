@@ -15,6 +15,7 @@ import { UpdatePasswordComponent } from './components/update-password/update-pas
 import { EmployeeEditComponent } from './components/employee-edit/employee-edit.component';
 import { DepartmentEditComponent } from './components/department-edit/department-edit.component';
 import { PositionEditComponent } from './components/position-edit/position-edit.component';
+import { DeleteEntityComponent } from './components/delete-entity/delete-entity.component';
 
 @NgModule({
   declarations: [
@@ -27,6 +28,7 @@ import { PositionEditComponent } from './components/position-edit/position-edit.
     EmployeeEditComponent,
     DepartmentEditComponent,
     PositionEditComponent,
+    DeleteEntityComponent,
   ],
   imports: [
     CommonModule,

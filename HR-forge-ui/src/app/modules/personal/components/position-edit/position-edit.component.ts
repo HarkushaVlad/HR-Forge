@@ -9,6 +9,7 @@ import { PositionResponse } from '../../../../services/models/position-response'
 import { PositionService } from '../../../../services/services/position.service';
 import { TokenService } from '../../../../services/token/token.service';
 import { PositionRequest } from '../../../../services/models/position-request';
+import { DeleteEntityComponent } from '../delete-entity/delete-entity.component';
 
 @Component({
   selector: 'app-position-edit',
@@ -26,6 +27,9 @@ export class PositionEditComponent implements OnInit {
   isAdmin = false;
 
   @ViewChild('positionEditModal') positionEditModal: any;
+
+  @ViewChild(DeleteEntityComponent)
+  deleteEntityComponent!: DeleteEntityComponent;
 
   constructor(
     private positionService: PositionService,

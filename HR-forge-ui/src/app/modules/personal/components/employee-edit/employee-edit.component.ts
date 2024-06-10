@@ -4,6 +4,7 @@ import { EmployeeResponse } from '../../../../services/models/employee-response'
 import { EmployeeRequest } from '../../../../services/models/employee-request';
 import { TokenService } from '../../../../services/token/token.service';
 import { UpdatePasswordComponent } from '../update-password/update-password.component';
+import { DeleteEntityComponent } from '../delete-entity/delete-entity.component';
 
 @Component({
   selector: 'app-employee-edit',
@@ -25,6 +26,9 @@ export class EmployeeEditComponent {
 
   @ViewChild(UpdatePasswordComponent)
   updatePasswordComponent!: UpdatePasswordComponent;
+
+  @ViewChild(DeleteEntityComponent)
+  deleteEntityComponent!: DeleteEntityComponent;
 
   constructor(
     private employeeService: EmployeeService,

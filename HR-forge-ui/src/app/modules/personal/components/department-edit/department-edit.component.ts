@@ -9,6 +9,7 @@ import { DepartmentService } from '../../../../services/services/department.serv
 import { TokenService } from '../../../../services/token/token.service';
 import { DepartmentResponse } from '../../../../services/models/department-response';
 import { DepartmentRequest } from '../../../../services/models/department-request';
+import { DeleteEntityComponent } from '../delete-entity/delete-entity.component';
 
 @Component({
   selector: 'app-department-edit',
@@ -26,6 +27,9 @@ export class DepartmentEditComponent implements OnInit {
   isAdmin = false;
 
   @ViewChild('departmentEditModal') departmentEditModal: any;
+
+  @ViewChild(DeleteEntityComponent)
+  deleteEntityComponent!: DeleteEntityComponent;
 
   constructor(
     private departmentService: DepartmentService,
