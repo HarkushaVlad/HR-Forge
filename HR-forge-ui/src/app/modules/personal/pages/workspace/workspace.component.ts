@@ -1,15 +1,14 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { EmployeeService } from '../../../../services/services/employee.service';
 import { PageResponseEmployeeResponse } from '../../../../services/models/page-response-employee-response';
-import { DepartmentResponse } from '../../../../services/models/department-response';
 import { DepartmentService } from '../../../../services/services/department.service';
 import { PageResponseDepartmentResponse } from '../../../../services/models/page-response-department-response';
-import { PositionResponse } from '../../../../services/models/position-response';
 import { PageResponsePositionResponse } from '../../../../services/models/page-response-position-response';
 import { PositionService } from '../../../../services/services/position.service';
 import { TokenService } from '../../../../services/token/token.service';
 import { EmployeeEditComponent } from '../../components/employee-edit/employee-edit.component';
-import { EmployeeResponse } from '../../../../services/models/employee-response';
+import { DepartmentEditComponent } from '../../components/department-edit/department-edit.component';
+import { PositionEditComponent } from '../../components/position-edit/position-edit.component';
 
 @Component({
   selector: 'app-workspace',
@@ -23,9 +22,15 @@ export class WorkspaceComponent implements OnInit {
 
   @ViewChild(EmployeeEditComponent)
   employeeEditComponent!: EmployeeEditComponent;
-  employee?: EmployeeResponse;
+
+  @ViewChild(DepartmentEditComponent)
+  departmentEditComponent!: DepartmentEditComponent;
+
+  @ViewChild(PositionEditComponent)
+  positionEditComponent!: PositionEditComponent;
 
   isAdmin = false;
+  addCaption = 'employee';
   message: string | null = null;
   level: string | null = null;
   page = 0;
@@ -47,6 +52,12 @@ export class WorkspaceComponent implements OnInit {
     private tokenService: TokenService
   ) {}
 
+  addNewEmployee(): void {}
+
+  addNewDepartment(): void {}
+
+  addNewPosition(): void {}
+
   ngOnInit(): void {
     this.changeOption({ target: { value: 'employees' } });
     this.isAdmin = this.isAdmin = this.tokenService.checkIsAdmin();
@@ -55,12 +66,15 @@ export class WorkspaceComponent implements OnInit {
   loadData(): void {
     if (this.selectedOption === 'employees') {
       this.loadEmployees();
+      this.addCaption = 'employee';
     }
     if (this.selectedOption === 'departments') {
       this.loadDepartments();
+      this.addCaption = 'department';
     }
     if (this.selectedOption === 'positions') {
       this.loadPositions();
+      this.addCaption = 'position';
     }
   }
 
@@ -217,13 +231,5 @@ export class WorkspaceComponent implements OnInit {
   goToLastPage(): void {
     this.page = this.pages.length - 1;
     this.loadData();
-  }
-
-  editDepartment(department: DepartmentResponse): void {
-    console.log('Edit department', department);
-  }
-
-  editPosition(position: PositionResponse): void {
-    console.log('Edit position', position);
   }
 }

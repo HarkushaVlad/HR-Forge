@@ -4,6 +4,8 @@
   justify-content: center;
   align-items: center;
   min-height: 100vh;
+  padding-top: 20px;
+  padding-bottom: 20px;
 }
 
 .pagination-container {
@@ -48,7 +50,6 @@
 }
 
 .radio-buttons {
-  margin-top: 20px;
   margin-bottom: 20px;
   border: 1px solid #dddddd;
   border-radius: 5px;
@@ -135,6 +136,7 @@ input[type="radio"]:checked + .radio-label {
 
 .search-container {
   display: flex;
+  justify-content: center;
   align-items: center;
   gap: 10px;
   margin-bottom: 20px;
@@ -142,6 +144,7 @@ input[type="radio"]:checked + .radio-label {
 
 .search-container-buttons {
   display: flex;
+  justify-content: center;
   align-items: center;
   gap: 10px;
 }
@@ -179,26 +182,37 @@ input[type="radio"]:checked + .radio-label {
   background-color: #0056b3;
 }
 
-.search-container button:last-child:hover {
+.search-container button:nth-last-child(2):hover {
   background-color: #a0a0a0;
 }
 
-@media (max-width: 500px) {
+.search-container button:last-child {
+  background-color: #5fbd66;
+  border-color: #58b261;
+  width: 100%;
+}
+
+.search-container button:last-child:hover {
+  background-color: #47934e;
+}
+
+@media (max-width: 600px) {
   .search-container {
     flex-direction: column;
   }
 
-  .search-container-buttons {
-    flex-direction: row-reverse;
+  .search-container input[type="text"] {
+    width: 235px;
+    padding: 6px;
   }
 
   .search-container button {
     width: 112px;
   }
 
-  .search-container input[type="text"] {
-    width: 235px;
-    padding: 6px;
+  .search-container-buttons {
+    max-width: 235px;
+    flex-wrap: wrap;
   }
 }
 

@@ -16,11 +16,20 @@
     <label for="positions" class="radio-label" [class.disabled]="!isAdmin">Positions</label>
   </div>
 
-  <div class="search-container">
+  <div class="search-container" *ngIf="!isLoading">
     <input type="text" placeholder="Enter a name..." [(ngModel)]="searchTerm" (keyup.enter)="search()">
     <div class="search-container-buttons">
       <button (click)="search()">Search</button>
       <button (click)="clearSearch()">Clear</button>
+      <button class="add-button" *ngIf="selectedOption === 'employees'" (click)="addNewEmployee()">
+        Add new {{ addCaption }}
+      </button>
+      <button class="add-button" *ngIf="selectedOption === 'departments'" (click)="addNewDepartment()">
+        Add new {{ addCaption }}
+      </button>
+      <button class="add-button" *ngIf="selectedOption === 'positions'" (click)="addNewPosition()">
+        Add new {{ addCaption }}
+      </button>
     </div>
   </div>
 
@@ -50,13 +59,13 @@
   <div *ngIf="selectedOption === 'departments' && !isLoading && isAdmin">
     <div class="department-container">
       <app-department-card *ngFor="let department of departmentResponse?.content" [department]="department"
-                           (edit)="editDepartment($event)"></app-department-card>
+                           (edit)="departmentEditComponent.openEditDepartmentDialog(department)"></app-department-card>
     </div>
   </div>
   <div *ngIf="selectedOption === 'positions' && !isLoading && isAdmin">
     <div class="position-container">
       <app-position-card *ngFor="let position of positionResponse?.content" [position]="position"
-                         (edit)="editPosition($event)"></app-position-card>
+                         (edit)="positionEditComponent.openEditPositionDialog(position)"></app-position-card>
     </div>
   </div>
   <div class="pagination-container">
@@ -96,3 +105,5 @@
 </div>
 
 <app-employee-edit (updateSuccess)="successUpdate()"></app-employee-edit>
+<app-department-edit (updateSuccess)="successUpdate()"></app-department-edit>
+<app-position-edit (updateSuccess)="successUpdate()"></app-position-edit>

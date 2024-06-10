@@ -13,6 +13,8 @@ import { SharedModule } from '../shared/shared/shared.module';
 import { PositionCardComponent } from './components/position-card/position-card.component';
 import { UpdatePasswordComponent } from './components/update-password/update-password.component';
 import { EmployeeEditComponent } from './components/employee-edit/employee-edit.component';
+import { DepartmentEditComponent } from './components/department-edit/department-edit.component';
+import { PositionEditComponent } from './components/position-edit/position-edit.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +25,8 @@ import { EmployeeEditComponent } from './components/employee-edit/employee-edit.
     PositionCardComponent,
     UpdatePasswordComponent,
     EmployeeEditComponent,
+    DepartmentEditComponent,
+    PositionEditComponent,
   ],
   imports: [
     CommonModule,

@@ -15,6 +15,7 @@ export class EmployeeEditComponent {
 
   employee!: EmployeeResponse;
   resetEmployee!: EmployeeResponse;
+
   errorMsg: Array<string> = [];
   isLoading: boolean = true;
   isAdmin = false;
