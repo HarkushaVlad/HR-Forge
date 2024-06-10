@@ -7,7 +7,7 @@
       <strong>Position:</strong> {{ position.name }}
     </p>
     <p class="description" (click)="copyToClipboard(position.description)">
-      <strong>Description:</strong> {{ position.description | truncate:50 }}
+      <strong>Description:</strong> {{ position.description === '' ? 'No description' : position.description | truncate:50}}
     </p>
     <button (click)="editPosition()" class="btn btn-primary">Edit</button>
   </div>

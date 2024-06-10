@@ -23,6 +23,7 @@ export class PositionEditComponent implements OnInit {
   resetPosition!: PositionResponse;
 
   errorMsg: Array<string> = [];
+  isEditing = true;
   isLoading: boolean = true;
   isAdmin = false;
 
@@ -43,13 +44,23 @@ export class PositionEditComponent implements OnInit {
   openEditPositionDialog(position: PositionResponse): void {
     this.position = { ...position };
     this.resetPosition = { ...position };
+    this.isEditing = true;
     this.errorMsg = [];
     this.isLoading = false;
     this.positionEditModal.show();
     this.isAdmin = this.tokenService.checkIsAdmin();
   }
 
-  onSubmit(): void {
+  openAddPositionDialog(): void {
+    this.clear();
+    this.isEditing = false;
+    this.errorMsg = [];
+    this.isLoading = false;
+    this.positionEditModal.show();
+    this.isAdmin = this.tokenService.checkIsAdmin();
+  }
+
+  onUpdate(): void {
     this.isLoading = true;
     this.errorMsg = [];
 
@@ -66,7 +77,37 @@ export class PositionEditComponent implements OnInit {
       .subscribe({
         next: () => {
           this.isLoading = false;
-          this.positionEditModal.hide();
+          this.close();
+          this.updateSuccess.emit();
+        },
+        error: (err) => {
+          this.isLoading = false;
+          if (err.error.validationErrors) {
+            this.errorMsg = err.error.validationErrors;
+          } else {
+            this.errorMsg.push(err.error.error);
+          }
+        },
+      });
+  }
+
+  onAdd(): void {
+    this.isLoading = true;
+    this.errorMsg = [];
+
+    const positionRequest: PositionRequest = {
+      name: this.position.name ?? '',
+      description: this.position.description ?? '',
+    };
+
+    this.positionService
+      .createPosition({
+        body: positionRequest,
+      })
+      .subscribe({
+        next: () => {
+          this.isLoading = false;
+          this.close();
           this.updateSuccess.emit();
         },
         error: (err) => {
@@ -82,5 +123,16 @@ export class PositionEditComponent implements OnInit {
 
   resetForm(): void {
     this.openEditPositionDialog(this.resetPosition);
+  }
+
+  clear() {
+    this.position = {
+      name: '',
+      description: '',
+    };
+  }
+
+  close() {
+    this.positionEditModal.hide();
   }
 }

@@ -3,12 +3,12 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">Edit position</h5>
+        <h5 class="modal-title">{{isEditing ? 'Edit' : 'Add'}} Position</h5>
         <div class="modal-title-buttons">
-          <button type="button" class="btn btn-danger"
+          <button *ngIf="isEditing" type="button" class="btn btn-danger"
                   (click)="deleteEntityComponent.openDeleteEntityDialog(position)">Delete
           </button>
-          <button type="button" class="btn btn-secondary" (click)="resetForm()">Reset</button>
+          <button *ngIf="isEditing" type="button" class="btn btn-secondary" (click)="resetForm()">Reset</button>
         </div>
       </div>
       <div class="text-center mt-5" *ngIf="isLoading">
@@ -36,7 +36,8 @@
       </div>
       <div class="modal-footer" *ngIf="!isLoading">
         <button type="button" class="btn btn-secondary" (click)="positionEditModal.hide()">Cancel</button>
-        <button type="button" class="btn btn-primary" (click)="onSubmit()">Update</button>
+        <button  *ngIf="isEditing" type="button" class="btn btn-primary" (click)="onUpdate()">Update</button>
+        <button  *ngIf="!isEditing" type="button" class="btn btn-primary" (click)="onAdd()">Add</button>
       </div>
     </div>
   </div>

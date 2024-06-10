@@ -23,6 +23,7 @@ export class DepartmentEditComponent implements OnInit {
   resetDepartment!: DepartmentResponse;
 
   errorMsg: Array<string> = [];
+  isEditing = true;
   isLoading: boolean = true;
   isAdmin = false;
 
@@ -43,13 +44,23 @@ export class DepartmentEditComponent implements OnInit {
   openEditDepartmentDialog(department: DepartmentResponse): void {
     this.department = { ...department };
     this.resetDepartment = { ...department };
+    this.isEditing = true;
     this.errorMsg = [];
     this.isLoading = false;
     this.departmentEditModal.show();
     this.isAdmin = this.tokenService.checkIsAdmin();
   }
 
-  onSubmit(): void {
+  openAddDepartmentDialog(): void {
+    this.clear();
+    this.isEditing = false;
+    this.errorMsg = [];
+    this.isLoading = false;
+    this.departmentEditModal.show();
+    this.isAdmin = this.tokenService.checkIsAdmin();
+  }
+
+  onUpdate(): void {
     this.isLoading = true;
     this.errorMsg = [];
 
@@ -66,7 +77,37 @@ export class DepartmentEditComponent implements OnInit {
       .subscribe({
         next: () => {
           this.isLoading = false;
-          this.departmentEditModal.hide();
+          this.close();
+          this.updateSuccess.emit();
+        },
+        error: (err) => {
+          this.isLoading = false;
+          if (err.error.validationErrors) {
+            this.errorMsg = err.error.validationErrors;
+          } else {
+            this.errorMsg.push(err.error.error);
+          }
+        },
+      });
+  }
+
+  onAdd(): void {
+    this.isLoading = true;
+    this.errorMsg = [];
+
+    const departmentRequest: DepartmentRequest = {
+      name: this.department.name ?? '',
+      description: this.department.description ?? '',
+    };
+
+    this.departmentService
+      .createDepartment({
+        body: departmentRequest,
+      })
+      .subscribe({
+        next: () => {
+          this.isLoading = false;
+          this.close();
           this.updateSuccess.emit();
         },
         error: (err) => {
@@ -82,5 +123,16 @@ export class DepartmentEditComponent implements OnInit {
 
   resetForm(): void {
     this.openEditDepartmentDialog(this.resetDepartment);
+  }
+
+  clear() {
+    this.department = {
+      name: '',
+      description: '',
+    };
+  }
+
+  close() {
+    this.departmentEditModal.hide();
   }
 }

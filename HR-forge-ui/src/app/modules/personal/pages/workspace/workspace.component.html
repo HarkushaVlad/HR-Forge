@@ -21,13 +21,14 @@
     <div class="search-container-buttons">
       <button (click)="search()">Search</button>
       <button (click)="clearSearch()">Clear</button>
-      <button class="add-button" *ngIf="selectedOption === 'employees'" (click)="addNewEmployee()">
+      <button class="add-button" *ngIf="selectedOption === 'employees'"
+              (click)="employeeEditComponent.openAddEmployeeDialog()">
         Add new {{ addCaption }}
       </button>
-      <button class="add-button" *ngIf="selectedOption === 'departments'" (click)="addNewDepartment()">
+      <button class="add-button" *ngIf="selectedOption === 'departments'" (click)="departmentEditComponent.openAddDepartmentDialog()">
         Add new {{ addCaption }}
       </button>
-      <button class="add-button" *ngIf="selectedOption === 'positions'" (click)="addNewPosition()">
+      <button class="add-button" *ngIf="selectedOption === 'positions'" (click)="positionEditComponent.openAddPositionDialog()">
         Add new {{ addCaption }}
       </button>
     </div>

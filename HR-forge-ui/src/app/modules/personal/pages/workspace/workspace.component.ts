@@ -52,12 +52,6 @@ export class WorkspaceComponent implements OnInit {
     private tokenService: TokenService
   ) {}
 
-  addNewEmployee(): void {}
-
-  addNewDepartment(): void {}
-
-  addNewPosition(): void {}
-
   ngOnInit(): void {
     this.changeOption({ target: { value: 'employees' } });
     this.isAdmin = this.isAdmin = this.tokenService.checkIsAdmin();
@@ -121,6 +115,9 @@ export class WorkspaceComponent implements OnInit {
 
   successUpdate(): void {
     this.search(this.page);
+    this.employeeEditComponent.close();
+    this.departmentEditComponent.close();
+    this.positionEditComponent.close();
   }
 
   loadEmployees(): void {

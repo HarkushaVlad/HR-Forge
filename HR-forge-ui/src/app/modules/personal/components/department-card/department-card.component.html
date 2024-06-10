@@ -7,7 +7,7 @@
       <strong>Department:</strong> {{ department.name }}
     </p>
     <p class="description" (click)="copyToClipboard(department.description)">
-      <strong>Description:</strong> {{ department.description | truncate:50 }}
+      <strong>Description:</strong> {{ department.description === '' ? 'No description' : department.description | truncate:50 }}
     </p>
     <button (click)="editDepartment()" class="btn btn-primary">Edit</button>
   </div>

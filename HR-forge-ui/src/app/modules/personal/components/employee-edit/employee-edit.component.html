@@ -3,15 +3,17 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">Edit Employee</h5>
+        <h5 class="modal-title">{{isEditing ? 'Edit' : 'Add'}} Employee</h5>
         <div class="modal-title-buttons">
-          <button type="button" class="btn btn-danger" (click)="deleteEntityComponent.openDeleteEntityDialog(employee)"
+          <button *ngIf="isEditing" type="button" class="btn btn-danger"
+                  (click)="deleteEntityComponent.openDeleteEntityDialog(employee)"
                   [disabled]="isOwn">Delete
           </button>
-          <button type="button" class="btn btn-primary" (click)="updatePasswordComponent.openUpdatePasswordDialog()"
+          <button *ngIf="isEditing" type="button" class="btn btn-primary"
+                  (click)="updatePasswordComponent.openUpdatePasswordDialog()"
                   [disabled]="!isAdmin || isOwn">Change Password
           </button>
-          <button type="button" class="btn btn-secondary" (click)="resetForm()">Reset</button>
+          <button *ngIf="isEditing" type="button" class="btn btn-secondary" (click)="resetForm()">Reset</button>
         </div>
       </div>
       <div class="text-center mt-5" *ngIf="isLoading">
@@ -62,11 +64,21 @@
             <label for="hireDate" class="form-label">Hire Date</label>
             <input type="date" class="form-control" id="hireDate" [(ngModel)]="employee.hireDate" name="hireDate">
           </div>
+          <div class="mb-3" *ngIf="!isEditing">
+            <label for="password" class="form-label">Password</label>
+            <input type="password" class="form-control" id="password" [(ngModel)]="password" name="password">
+          </div>
+          <div class="mb-3" *ngIf="!isEditing">
+            <label for="repeatPassword" class="form-label">Repeat Password</label>
+            <input type="password" class="form-control" id="repeatPassword" [(ngModel)]="repeatPassword"
+                   name="repeatPassword">
+          </div>
         </form>
       </div>
       <div class="modal-footer" *ngIf="!isLoading">
         <button type="button" class="btn btn-secondary" (click)="employeeEditModal.hide()">Cancel</button>
-        <button type="button" class="btn btn-primary" (click)="onSubmit()">Update Employee</button>
+        <button *ngIf="isEditing" type="button" class="btn btn-primary" (click)="onUpdate()">Update Employee</button>
+        <button *ngIf="!isEditing" type="button" class="btn btn-primary" (click)="onAdd()">Add Employee</button>
       </div>
     </div>
   </div>
