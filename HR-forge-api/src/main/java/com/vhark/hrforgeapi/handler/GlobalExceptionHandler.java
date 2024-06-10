@@ -13,8 +13,11 @@ import com.vhark.hrforgeapi.personal.exceptions.InvalidPasswordException;
 import com.vhark.hrforgeapi.position.exceptions.InvalidPositionIdException;
 import com.vhark.hrforgeapi.position.exceptions.PositionNameIsAlreadyInUseException;
 import com.vhark.hrforgeapi.position.exceptions.PositionNotFoundException;
+import com.vhark.hrforgeapi.security.exceptions.InvalidJWTException;
 import java.util.HashSet;
 import java.util.Set;
+import org.modelmapper.MappingException;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -147,6 +150,25 @@ public class GlobalExceptionHandler {
                 .errorDescription(INVALID_PASSWORD.getDescription())
                 .error(ex.getMessage())
                 .build());
+  }
+
+  @ExceptionHandler(InvalidJWTException.class)
+  public ResponseEntity<ExceptionResponse> handleException(InvalidJWTException ex) {
+    return ResponseEntity.status(INVALID_JWT.getHttpStatus())
+        .body(
+            ExceptionResponse.builder()
+                .errorDescription(INVALID_JWT.getDescription())
+                .error(ex.getMessage())
+                .build());
+  }
+
+  @ExceptionHandler(MappingException.class)
+  public ResponseEntity<ExceptionResponse> handleException(MappingException ex) {
+    return ResponseEntity.status(NOT_FOUND)
+            .body(ExceptionResponse.builder()
+                    .errorDescription("Mapping Error")
+                    .error("Invalid department or position name")
+                    .build());
   }
 
   @ExceptionHandler(Exception.class)

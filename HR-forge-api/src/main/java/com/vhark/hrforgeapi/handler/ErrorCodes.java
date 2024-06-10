@@ -21,6 +21,7 @@ public enum ErrorCodes {
   INVALID_POSITION_ID(BAD_REQUEST, "Position ID is invalid"),
   INVALID_DEPARTMENT_ID(BAD_REQUEST, "Department ID is invalid"),
   INVALID_PASSWORD(UNAUTHORIZED, "Invalid password"),
+  INVALID_JWT(UNAUTHORIZED, "Invalid JWT"),
   ;
 
   private final String description;

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { jwtDecode } from 'jwt-decode';
+import { EmployeeResponse } from '../models/employee-response';
 
 @Injectable({
   providedIn: 'root',
@@ -56,5 +57,15 @@ export class TokenService {
 
   removeToken() {
     localStorage.removeItem('token');
+  }
+
+  checkIsAdmin(): boolean {
+    const authorities = this.getAuthorities();
+    return authorities.includes('System Administrator');
+  }
+
+  checkIsOwn(employee: EmployeeResponse): boolean {
+    const decodedTokenEmail = jwtDecode(this.token).sub;
+    return employee.email === decodedTokenEmail;
   }
 }

@@ -12,6 +12,7 @@ import { DepartmentCardComponent } from './components/department-card/department
 import { SharedModule } from '../shared/shared/shared.module';
 import { PositionCardComponent } from './components/position-card/position-card.component';
 import { UpdatePasswordComponent } from './components/update-password/update-password.component';
+import { EmployeeEditComponent } from './components/employee-edit/employee-edit.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { UpdatePasswordComponent } from './components/update-password/update-pas
     DepartmentCardComponent,
     PositionCardComponent,
     UpdatePasswordComponent,
+    EmployeeEditComponent,
   ],
   imports: [
     CommonModule,

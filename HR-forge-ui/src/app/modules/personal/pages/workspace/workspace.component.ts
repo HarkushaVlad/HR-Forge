@@ -1,7 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { EmployeeService } from '../../../../services/services/employee.service';
 import { PageResponseEmployeeResponse } from '../../../../services/models/page-response-employee-response';
-import { EmployeeResponse } from '../../../../services/models/employee-response';
 import { DepartmentResponse } from '../../../../services/models/department-response';
 import { DepartmentService } from '../../../../services/services/department.service';
 import { PageResponseDepartmentResponse } from '../../../../services/models/page-response-department-response';
@@ -9,6 +8,8 @@ import { PositionResponse } from '../../../../services/models/position-response'
 import { PageResponsePositionResponse } from '../../../../services/models/page-response-position-response';
 import { PositionService } from '../../../../services/services/position.service';
 import { TokenService } from '../../../../services/token/token.service';
+import { EmployeeEditComponent } from '../../components/employee-edit/employee-edit.component';
+import { EmployeeResponse } from '../../../../services/models/employee-response';
 
 @Component({
   selector: 'app-workspace',
@@ -19,6 +20,10 @@ export class WorkspaceComponent implements OnInit {
   employeeResponse?: PageResponseEmployeeResponse;
   departmentResponse?: PageResponseDepartmentResponse;
   positionResponse?: PageResponsePositionResponse;
+
+  @ViewChild(EmployeeEditComponent)
+  employeeEditComponent!: EmployeeEditComponent;
+  employee?: EmployeeResponse;
 
   isAdmin = false;
   message: string | null = null;
@@ -44,7 +49,7 @@ export class WorkspaceComponent implements OnInit {
 
   ngOnInit(): void {
     this.changeOption({ target: { value: 'employees' } });
-    this.checkIsAdmin();
+    this.isAdmin = this.isAdmin = this.tokenService.checkIsAdmin();
   }
 
   loadData(): void {
@@ -90,14 +95,18 @@ export class WorkspaceComponent implements OnInit {
     this.loadData();
   }
 
-  search(): void {
-    this.page = 0;
+  search(page: number = 0): void {
+    this.page = page;
     this.loadData();
   }
 
   clearSearch(): void {
     this.searchTerm = '';
     this.search();
+  }
+
+  successUpdate(): void {
+    this.search(this.page);
   }
 
   loadEmployees(): void {
@@ -210,23 +219,11 @@ export class WorkspaceComponent implements OnInit {
     this.loadData();
   }
 
-  editEmployee(employee: EmployeeResponse): void {
-    // Logic to handle editing employee
-    console.log('Edit employee', employee);
-  }
-
   editDepartment(department: DepartmentResponse): void {
-    // Logic to handle editing employee
     console.log('Edit department', department);
   }
 
   editPosition(position: PositionResponse): void {
-    // Logic to handle editing employee
     console.log('Edit position', position);
-  }
-
-  private checkIsAdmin() {
-    const authorities = this.tokenService.getAuthorities();
-    this.isAdmin = authorities.includes('System Administrator');
   }
 }

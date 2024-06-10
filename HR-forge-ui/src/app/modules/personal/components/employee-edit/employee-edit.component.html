@@ -1,0 +1,69 @@
+<div bsModal #employeeEditModal="bs-modal" class="modal fade" tabindex="-1" role="dialog"
+     aria-labelledby="dialog-nested-name">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Edit Employee</h5>
+        <div class="modal-title-buttons">
+          <button type="button" class="btn btn-primary" (click)="updatePasswordComponent.openUpdatePasswordDialog()" [disabled]="!isAdmin || isOwn">Change Password</button>
+          <button type="button" class="btn btn-secondary" (click)="resetForm()">Reset</button>
+        </div>
+      </div>
+      <div class="text-center mt-5" *ngIf="isLoading">
+        <div class="spinner-border text-primary" role="status">
+          <span class="visually-hidden">Loading...</span>
+        </div>
+      </div>
+      <div class="modal-body" *ngIf="!isLoading">
+        <div class="alert alert-danger" role="alert" *ngIf="errorMsg.length">
+          <p *ngFor="let msg of errorMsg">{{ msg }}</p>
+        </div>
+        <form>
+          <div class="mb-3">
+            <label for="firstName" class="form-label">First Name</label>
+            <input type="text" class="form-control" id="firstName" [(ngModel)]="employee.firstName"
+                   name="firstName">
+          </div>
+          <div class="mb-3">
+            <label for="lastName" class="form-label">Last Name</label>
+            <input type="text" class="form-control" id="lastName" [(ngModel)]="employee.lastName"
+                   name="lastName">
+          </div>
+          <div class="mb-3">
+            <label for="email" class="form-label">Email</label>
+            <input type="email" class="form-control" id="email" [disabled]="isOwn" [(ngModel)]="employee.email" name="email">
+          </div>
+          <div class="mb-3">
+            <label for="birthDate" class="form-label">Birth Date</label>
+            <input type="date" class="form-control" id="birthDate" [(ngModel)]="employee.birthDate" name="birthDate">
+          </div>
+          <div class="mb-3">
+            <label for="positionName" class="form-label">Position</label>
+            <input type="text" class="form-control" id="positionName" [(ngModel)]="employee.positionName"
+                   name="positionName">
+          </div>
+          <div class="mb-3">
+            <label for="departmentName" class="form-label">Department</label>
+            <input type="text" class="form-control" id="departmentName" [(ngModel)]="employee.departmentName"
+                   name="departmentName">
+          </div>
+          <div class="mb-3">
+            <label for="salary" class="form-label">Salary</label>
+            <input type="number" class="form-control" id="salary" [(ngModel)]="employee.salary"
+                   name="salary">
+          </div>
+          <div class="mb-3">
+            <label for="hireDate" class="form-label">Hire Date</label>
+            <input type="date" class="form-control" id="hireDate" [(ngModel)]="employee.hireDate" name="hireDate">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer" *ngIf="!isLoading">
+        <button type="button" class="btn btn-secondary" (click)="employeeEditModal.hide()">Cancel</button>
+        <button type="button" class="btn btn-primary" (click)="onSubmit()">Update Employee</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-update-password *ngIf="employee" [isPersonal]="false" [employeeId]="employee.employeeId"></app-update-password>

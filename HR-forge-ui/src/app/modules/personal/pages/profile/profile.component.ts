@@ -1,4 +1,3 @@
-// profile.component.ts
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { PersonalService } from '../../../../services/services/personal.service';
 import { EmployeeResponse } from '../../../../services/models/employee-response';

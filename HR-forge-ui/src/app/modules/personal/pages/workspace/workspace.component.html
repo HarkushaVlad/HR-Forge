@@ -44,7 +44,7 @@
   <div *ngIf="selectedOption === 'employees' && !isLoading">
     <div class="employees-container">
       <app-employee-card *ngFor="let employee of employeeResponse?.content" [employee]="employee"
-                         (edit)="editEmployee($event)"></app-employee-card>
+                         (edit)="employeeEditComponent.openEditEmployeeDialog(employee)"></app-employee-card>
     </div>
   </div>
   <div *ngIf="selectedOption === 'departments' && !isLoading && isAdmin">
@@ -94,3 +94,5 @@
     </nav>
   </div>
 </div>
+
+<app-employee-edit (updateSuccess)="successUpdate()"></app-employee-edit>
