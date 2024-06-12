@@ -74,6 +74,7 @@ export class WorkspaceComponent implements OnInit {
 
   changeOption(event: any): void {
     this.selectedOption = event.target.value;
+    this.page = 0;
     this.searchTerm = '';
     this.updateSortFields();
     this.loadData();
