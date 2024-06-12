@@ -1,9 +1,9 @@
 package com.vhark.hrforgeapi.security;
 
 import com.vhark.hrforgeapi.employee.EmployeeRepository;
-import com.vhark.hrforgeapi.security.exceptions.InvalidJWTException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,7 +16,10 @@ public class UserDetailsService
 
   @Override
   @Transactional
-  public UserDetails loadUserByUsername(String username) throws InvalidJWTException {
-    return employeeRepository.findByEmail(username).orElseThrow(InvalidJWTException::new);
+  public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    return employeeRepository
+            .findByEmail(username)
+            .orElseThrow(
+                    () -> new UsernameNotFoundException("User not found with username: " + username));
   }
 }
