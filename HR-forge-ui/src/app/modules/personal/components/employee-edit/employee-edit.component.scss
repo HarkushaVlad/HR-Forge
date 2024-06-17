@@ -7,5 +7,7 @@
 
 .modal-title-buttons {
   display: flex;
+  justify-content: flex-end;
+  flex-wrap: wrap;
   gap: 10px;
 }

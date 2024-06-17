@@ -13,13 +13,13 @@ import lombok.Setter;
 @Builder
 public class AuthenticationRequest {
 
-  @Email(message = "Email is not formatted")
-  @NotEmpty(message = "Email is mandatory")
-  @NotBlank(message = "Email is mandatory")
+  @Email(message = "Електронна пошта не відповідає формату")
+  @NotEmpty(message = "Електронна пошта є обов'язковою")
+  @NotBlank(message = "Електронна пошта є обов'язковою")
   private String email;
 
-  @Size(min = 6, message = "Password should contain at least 6 characters")
-  @NotEmpty(message = "Password is mandatory")
-  @NotBlank(message = "Password is mandatory")
+  @Size(min = 6, message = "Пароль повинен містити щонайменше 6 символів")
+  @NotEmpty(message = "Пароль є обов'язковим")
+  @NotBlank(message = "Пароль є обов'язковим")
   private String password;
 }

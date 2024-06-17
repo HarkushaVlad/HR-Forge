@@ -15,6 +15,11 @@ import { HttpTokenInterceptor } from './services/interceptor/http-token.intercep
 import { SharedModule } from './modules/shared/shared/shared.module';
 import { LogoutComponent } from './pages/logout/logout.component';
 import { NotFoundComponent } from './pages/not-found/not-found/not-found.component';
+import { defineLocale, ukLocale } from 'ngx-bootstrap/chronos';
+import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
+import { DatePipe } from '@angular/common';
+
+defineLocale('uk', ukLocale);
 
 @NgModule({
   declarations: [
@@ -30,6 +35,7 @@ import { NotFoundComponent } from './pages/not-found/not-found/not-found.compone
     HttpClientModule,
     FormsModule,
     SharedModule,
+    BsDatepickerModule.forRoot(),
   ],
   providers: [
     HttpClient,
@@ -38,6 +44,7 @@ import { NotFoundComponent } from './pages/not-found/not-found/not-found.compone
       useClass: HttpTokenInterceptor,
       multi: true,
     },
+    DatePipe,
   ],
   bootstrap: [AppComponent],
 })

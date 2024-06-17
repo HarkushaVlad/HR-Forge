@@ -7,6 +7,8 @@ import { UpdatePasswordComponent } from '../update-password/update-password.comp
 import { DeleteEntityComponent } from '../delete-entity/delete-entity.component';
 import { AuthenticationService } from '../../../../services/services/authentication.service';
 import { RegistrationRequest } from '../../../../services/models/registration-request';
+import { BsLocaleService } from 'ngx-bootstrap/datepicker';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-employee-edit',
@@ -39,8 +41,12 @@ export class EmployeeEditComponent {
   constructor(
     private employeeService: EmployeeService,
     private tokenService: TokenService,
-    private authService: AuthenticationService
-  ) {}
+    private authService: AuthenticationService,
+    private datePipe: DatePipe,
+    private localeService: BsLocaleService
+  ) {
+    this.localeService.use('uk');
+  }
 
   openEditEmployeeDialog(employee: EmployeeResponse): void {
     this.employee = {
@@ -78,10 +84,10 @@ export class EmployeeEditComponent {
     const employeeRequest: EmployeeRequest = {
       firstName: this.employee.firstName ?? '',
       lastName: this.employee.lastName ?? '',
-      birthDate: this.employee.birthDate ?? '',
+      birthDate: this.formatToServerDate(this.employee.birthDate) ?? '',
       email: this.employee.email ?? '',
       salary: this.employee.salary ?? 0,
-      hireDate: this.employee.hireDate ?? '',
+      hireDate: this.formatToServerDate(this.employee.hireDate) ?? '',
       positionName: this.employee.positionName ?? '',
       departmentName: this.employee.departmentName ?? '',
     };
@@ -113,7 +119,7 @@ export class EmployeeEditComponent {
     this.errorMsg = [];
 
     if (this.password !== this.repeatPassword) {
-      this.errorMsg.push('Passwords does not match');
+      this.errorMsg.push('Паролі не співпадають');
       this.isLoading = false;
       return;
     }
@@ -121,10 +127,10 @@ export class EmployeeEditComponent {
     const registrationRequest: RegistrationRequest = {
       firstName: this.employee.firstName ?? '',
       lastName: this.employee.lastName ?? '',
-      birthDate: this.employee.birthDate ?? '',
+      birthDate: this.formatToServerDate(this.employee.birthDate) ?? '',
       email: this.employee.email ?? '',
       salary: this.employee.salary ?? 0,
-      hireDate: this.employee.hireDate ?? '',
+      hireDate: this.formatToServerDate(this.employee.hireDate) ?? '',
       positionName: this.employee.positionName ?? '',
       departmentName: this.employee.departmentName ?? '',
       password: this.password,
@@ -157,10 +163,17 @@ export class EmployeeEditComponent {
 
   private formatDate(date: string | undefined): string {
     if (!date) return '';
-    const parsedDate = new Date(date);
-    const year = parsedDate.getFullYear();
-    const month = ('0' + (parsedDate.getMonth() + 1)).slice(-2);
-    const day = ('0' + parsedDate.getDate()).slice(-2);
+    return this.datePipe.transform(date, 'dd/MM/yyyy') ?? '';
+  }
+
+  private formatToServerDate(date: string | Date | undefined): string {
+    if (!date) return '';
+
+    if (typeof date !== 'string') {
+      date = this.datePipe.transform(date, 'dd/MM/yyyy') ?? '';
+    }
+
+    const [day, month, year] = date.split('/');
     return `${year}-${month}-${day}`;
   }
 

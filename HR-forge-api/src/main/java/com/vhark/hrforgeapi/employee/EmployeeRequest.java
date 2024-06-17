@@ -11,33 +11,33 @@ import lombok.Setter;
 @Builder
 public class EmployeeRequest {
 
-  @NotEmpty(message = "Department is mandatory")
-  @NotBlank(message = "Department is mandatory")
+  @NotEmpty(message = "Відділ є обов'язковим")
+  @NotBlank(message = "Відділ є обов'язковим")
   private String departmentName;
 
-  @NotEmpty(message = "Position is mandatory")
-  @NotBlank(message = "Position is mandatory")
+  @NotEmpty(message = "Посада є обов'язковою")
+  @NotBlank(message = "Посада є обов'язковою")
   private String positionName;
 
-  @NotEmpty(message = "Firstname is mandatory")
-  @NotBlank(message = "Firstname is mandatory")
+  @NotEmpty(message = "Ім'я є обов'язковим")
+  @NotBlank(message = "Ім'я є обов'язковим")
   private String firstName;
 
-  @NotEmpty(message = "Lastname is mandatory")
-  @NotBlank(message = "Lastname is mandatory")
+  @NotEmpty(message = "Прізвище є обов'язковим")
+  @NotBlank(message = "Прізвище є обов'язковим")
   private String lastName;
 
-  @NotNull(message = "Birth date is mandatory")
+  @NotNull(message = "Дата народження є обов'язковою")
   private Date birthDate;
 
-  @Email(message = "Email is not formatted")
-  @NotEmpty(message = "Email is mandatory")
-  @NotBlank(message = "Email is mandatory")
+  @Email(message = "Електронна пошта не відповідає формату")
+  @NotEmpty(message = "Електронна пошта є обов'язковою")
+  @NotBlank(message = "Електронна пошта є обов'язковою")
   private String email;
 
-  @NotNull(message = "Salary is mandatory")
+  @NotNull(message = "Зарплата є обов'язковою")
   private Double salary;
 
-  @NotNull(message = "Hire date is mandatory")
+  @NotNull(message = "Дата прийняття на роботу є обов'язковою")
   private Date hireDate;
 }

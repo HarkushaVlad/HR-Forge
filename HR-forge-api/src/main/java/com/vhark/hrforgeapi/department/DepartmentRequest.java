@@ -11,8 +11,9 @@ import lombok.Setter;
 @NoArgsConstructor
 public class DepartmentRequest {
 
-  @NotEmpty(message = "Department name is mandatory")
-  @NotBlank(message = "Department name is mandatory")
+  @NotEmpty(message = "Назва відділу є обов'язковою")
+  @NotBlank(message = "Назва відділу є обов'язковою")
   private String name;
+
   private String description;
 }

@@ -5,49 +5,60 @@
 <div class="workspace-container">
   <div class="radio-buttons">
     <input type="radio" id="employees" name="option" value="employees" checked (change)="changeOption($event)">
-    <label for="employees" class="radio-label">Employees</label>
+    <label for="employees" class="radio-label">Робітники</label>
 
     <input type="radio" id="departments" name="option" value="departments" (change)="changeOption($event)"
            [disabled]="!isAdmin">
-    <label for="departments" class="radio-label" [class.disabled]="!isAdmin">Departments</label>
+    <label for="departments" class="radio-label" [class.disabled]="!isAdmin">Департаменти</label>
 
     <input type="radio" id="positions" name="option" value="positions" (change)="changeOption($event)"
            [disabled]="!isAdmin">
-    <label for="positions" class="radio-label" [class.disabled]="!isAdmin">Positions</label>
+    <label for="positions" class="radio-label" [class.disabled]="!isAdmin">Посади</label>
   </div>
 
   <div class="search-container" *ngIf="!isLoading">
     <input type="text" placeholder="Enter a name..." [(ngModel)]="searchTerm" (keyup.enter)="search()">
     <div class="search-container-buttons">
-      <button (click)="search()">Search</button>
-      <button (click)="clearSearch()">Clear</button>
+      <button (click)="search()">Шукати</button>
+      <button (click)="clearSearch()">Очистити</button>
       <button class="add-button" *ngIf="selectedOption === 'employees'"
               (click)="employeeEditComponent.openAddEmployeeDialog()">
-        Add new {{ addCaption }}
+        Додати
       </button>
-      <button class="add-button" *ngIf="selectedOption === 'departments'" (click)="departmentEditComponent.openAddDepartmentDialog()">
-        Add new {{ addCaption }}
+      <button class="add-button" *ngIf="selectedOption === 'departments'"
+              (click)="departmentEditComponent.openAddDepartmentDialog()">
+        Додати
       </button>
-      <button class="add-button" *ngIf="selectedOption === 'positions'" (click)="positionEditComponent.openAddPositionDialog()">
-        Add new {{ addCaption }}
+      <button class="add-button" *ngIf="selectedOption === 'positions'"
+              (click)="positionEditComponent.openAddPositionDialog()">
+        Додати
       </button>
     </div>
   </div>
 
 
   <div class="sort-options">
-    <select id="sortField" [(ngModel)]="sortField" (change)="onSortChange()">
-      <option *ngFor="let field of sortFields" [value]="field">{{ field | fieldNameFormat }}</option>
+    <select *ngIf="selectedOption === 'employees'" [(ngModel)]="sortField" (change)="onSortChange()">
+      <option value="firstName">Ім'я</option>
+      <option value="lastName">Прізвище</option>
+      <option value="positionName">Посада</option>
+      <option value="departmentName">Назва департаменту</option>
+      <option value="hireDate">Початок роботи</option>
+      <option value="salary">Зарплатня</option>
+    </select>
+    <select *ngIf="selectedOption === 'departments' || selectedOption === 'positions'" [(ngModel)]="sortField" (change)="onSortChange()">
+      <option value="name">Назва</option>
+      <option value="description">Опис</option>
     </select>
     <select id="sortDirection" [(ngModel)]="sortDirection" (change)="onSortChange()">
-      <option value="ASC">Ascending</option>
-      <option value="DESC">Descending</option>
+      <option value="ASC">За зростанням</option>
+      <option value="DESC">За спаданням</option>
     </select>
   </div>
 
   <div class="text-center mt-5" *ngIf="isLoading">
     <div class="spinner-border text-primary" role="status">
-      <span class="visually-hidden">Loading...</span>
+      <span class="visually-hidden">Завантаження...</span>
     </div>
   </div>
 

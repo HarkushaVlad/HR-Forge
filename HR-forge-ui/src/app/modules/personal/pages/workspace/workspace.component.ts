@@ -30,7 +30,6 @@ export class WorkspaceComponent implements OnInit {
   positionEditComponent!: PositionEditComponent;
 
   isAdmin = false;
-  addCaption = 'employee';
   message: string | null = null;
   level: string | null = null;
   page = 0;
@@ -60,15 +59,12 @@ export class WorkspaceComponent implements OnInit {
   loadData(): void {
     if (this.selectedOption === 'employees') {
       this.loadEmployees();
-      this.addCaption = 'employee';
     }
     if (this.selectedOption === 'departments') {
       this.loadDepartments();
-      this.addCaption = 'department';
     }
     if (this.selectedOption === 'positions') {
       this.loadPositions();
-      this.addCaption = 'position';
     }
   }
 
@@ -141,7 +137,7 @@ export class WorkspaceComponent implements OnInit {
           this.isLoading = false;
         },
         error: () => {
-          this.message = 'Failed to load employees';
+          this.message = 'Не вдалося завантажити робітників';
           this.level = 'error';
           this.isLoading = false;
         },
@@ -168,7 +164,7 @@ export class WorkspaceComponent implements OnInit {
           this.isLoading = false;
         },
         error: () => {
-          this.message = 'Failed to load departments';
+          this.message = 'Не вдалося завантажити департаменти';
           this.level = 'error';
           this.isLoading = false;
         },
@@ -195,7 +191,7 @@ export class WorkspaceComponent implements OnInit {
           this.isLoading = false;
         },
         error: () => {
-          this.message = 'Failed to load positions';
+          this.message = 'Не вдалося завантажити посади';
           this.level = 'error';
           this.isLoading = false;
         },

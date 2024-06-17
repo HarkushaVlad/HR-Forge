@@ -1,17 +1,16 @@
 <div class="card">
   <div class="copy-body" [ngClass]="{'visible': isCopied}">
-    <p>Copied</p>
+    <p>Скопійовано</p>
   </div>
   <div class="card-body">
     <h5 class="name"
         (click)="copyToClipboard(employee.firstName + ' ' + employee.lastName)">{{ employee.firstName }} {{ employee.lastName }}</h5>
     <h6 class="position" (click)="copyToClipboard(employee.positionName)">{{ employee.positionName }}</h6>
     <p class="department" (click)="copyToClipboard(employee.departmentName)">
-      <strong>Department:</strong> {{ employee.departmentName }}</p>
-    <p class="salary" (click)="copyToClipboard(employee.salary?.toString())"><strong>Salary:</strong>
+      <strong>Департамент:</strong> {{ employee.departmentName }}</p>
+    <p class="salary" (click)="copyToClipboard(employee.salary?.toString())"><strong>Зарплатня:</strong>
       ${{ employee.salary }}</p>
-    <p class="hireDate" (click)="copyToClipboard(employee.hireDate?.slice(0, 10))"><strong>Hire
-      Date:</strong> {{ employee.hireDate | date }}</p>
-    <button (click)="editEmployee()" class="btn btn-primary">Edit</button>
+    <p class="hireDate" (click)="copyToClipboard(employee.hireDate?.slice(0, 10))"><strong>Початок роботи:</strong> {{ employee.hireDate | date:'dd.MM.yyyy' }}</p>
+    <button (click)="editEmployee()" class="btn btn-primary">Редагувати</button>
   </div>
 </div>

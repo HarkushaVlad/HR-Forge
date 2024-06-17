@@ -61,7 +61,7 @@ export class TokenService {
 
   checkIsAdmin(): boolean {
     const authorities = this.getAuthorities();
-    return authorities.includes('System Administrator');
+    return authorities.includes('Системний адміністратор');
   }
 
   checkIsOwn(employee: EmployeeResponse): boolean {

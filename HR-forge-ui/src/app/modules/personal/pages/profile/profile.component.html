@@ -1,54 +1,54 @@
 <div class="container">
   <div class="card mt-3">
     <div class="card-header">
-      <h3>Employee Information</h3>
+      <h3>Інформація про робітника</h3>
       <button class="btn btn-sm btn-primary float-right" (click)="updatePasswordComponent.openUpdatePasswordDialog()">
-        <i class="fas fa-key"></i>&nbsp;Update Password
+        <i class="fas fa-key"></i>&nbsp;Оновити пароль
       </button>
     </div>
     <div class="card-body" *ngIf="!isLoading && !isError">
       <div class="row mb-2">
         <div class="col-md-6">
-          <strong>First Name:</strong> {{ personalInformation.firstName }}
+          <strong>Ім'я:</strong> {{ personalInformation.firstName }}
           <button class="btn btn-sm btn-link" (click)="openEditDialog('First Name', 'firstName')">
             <i class="fas fa-edit"></i>
           </button>
         </div>
         <div class="col-md-6">
-          <strong>Position:</strong> {{ personalInformation.positionName }}
+          <strong>Посада:</strong> {{ personalInformation.positionName }}
         </div>
       </div>
       <div class="row mb-2">
         <div class="col-md-6">
-          <strong>Last Name:</strong> {{ personalInformation.lastName }}
+          <strong>Прізвище:</strong> {{ personalInformation.lastName }}
           <button class="btn btn-sm btn-link" (click)="openEditDialog('Last Name', 'lastName')">
             <i class="fas fa-edit"></i>
           </button>
         </div>
         <div class="col-md-6">
-          <strong>Department:</strong> {{ personalInformation.departmentName }}
+          <strong>Департамент:</strong> {{ personalInformation.departmentName }}
         </div>
       </div>
       <div class="row mb-2">
         <div class="col-md-6">
-          <strong>Email:</strong> {{ personalInformation.email }}
+          <strong>Електронна пошта:</strong> {{ personalInformation.email }}
           <button class="btn btn-sm btn-link" (click)="openEditDialog('Email', 'email')">
             <i class="fas fa-edit"></i>
           </button>
         </div>
         <div class="col-md-6">
-          <strong>Salary:</strong> {{ personalInformation.salary | currency }}
+          <strong>Зарплатня:</strong> {{ personalInformation.salary | currency }}
         </div>
       </div>
       <div class="row mb-2">
         <div class="col-md-6">
-          <strong>Birth Date:</strong> {{ personalInformation.birthDate | date }}
+          <strong>Дата народження:</strong> {{ personalInformation.birthDate | date:'dd.MM.yyyy' }}
           <button class="btn btn-sm btn-link" (click)="openEditDialog('Birth Date', 'birthDate')">
             <i class="fas fa-edit"></i>
           </button>
         </div>
         <div class="col-md-6">
-          <strong>Hire Date:</strong> {{ personalInformation.hireDate | date }}
+          <strong>Дата прийому на роботу:</strong> {{ personalInformation.hireDate | date:'dd.MM.yyyy' }}
         </div>
       </div>
     </div>
@@ -56,12 +56,12 @@
 
   <div class="text-center mt-5" *ngIf="isLoading">
     <div class="spinner-border text-primary" role="status">
-      <span class="visually-hidden">Loading...</span>
+      <span class="visually-hidden">Завантаження...</span>
     </div>
   </div>
 
   <div class="alert alert-danger mt-3" role="alert" *ngIf="isError">
-    Failed to load employee information. Please try again later.
+    Не вдалося завантажити дані про працівника. Спробуйте пізніше...
   </div>
 </div>
 
@@ -71,11 +71,14 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">Edit {{ fieldName | titlecase }}</h5>
+        <h5 *ngIf="fieldName === 'First Name'" class="modal-title">Редагувати Ім'я</h5>
+        <h5 *ngIf="fieldName === 'Last Name'" class="modal-title">Редагувати Прізвище</h5>
+        <h5 *ngIf="fieldName === 'Email'" class="modal-title">Редагувати Email</h5>
+        <h5 *ngIf="fieldName === 'Birth Date'" class="modal-title">Редагувати Дату народження</h5>
       </div>
       <div class="text-center mt-5" *ngIf="isLoading">
         <div class="spinner-border text-primary" role="status">
-          <span class="visually-hidden">Loading...</span>
+          <span class="visually-hidden">Завантаження...</span>
         </div>
       </div>
       <div class="modal-body" *ngIf="!isLoading">
@@ -90,8 +93,8 @@
         </div>
       </div>
       <div class="modal-footer" *ngIf="!isLoading">
-        <button type="button" class="btn btn-secondary" (click)="editModal.hide()">Cancel</button>
-        <button type="button" class="btn btn-primary" (click)="onSubmit()">Save changes</button>
+        <button type="button" class="btn btn-secondary" (click)="editModal.hide()">Відмінити</button>
+        <button type="button" class="btn btn-primary" (click)="onSubmit()">Зберегти зміни</button>
       </div>
     </div>
   </div>

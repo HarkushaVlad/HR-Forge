@@ -3,22 +3,22 @@
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title">{{isEditing ? 'Edit' : 'Add'}} Employee</h5>
+        <h5 class="modal-title">{{isEditing ? 'Редагувати' : 'Додати'}} Робітника</h5>
         <div class="modal-title-buttons">
           <button *ngIf="isEditing" type="button" class="btn btn-danger"
                   (click)="deleteEntityComponent.openDeleteEntityDialog(employee)"
-                  [disabled]="isOwn">Delete
+                  [disabled]="isOwn">Видалити
           </button>
           <button *ngIf="isEditing" type="button" class="btn btn-primary"
                   (click)="updatePasswordComponent.openUpdatePasswordDialog()"
-                  [disabled]="!isAdmin || isOwn">Change Password
+                  [disabled]="!isAdmin || isOwn">Змінити пароль
           </button>
-          <button *ngIf="isEditing" type="button" class="btn btn-secondary" (click)="resetForm()">Reset</button>
+          <button *ngIf="isEditing" type="button" class="btn btn-secondary" (click)="resetForm()">Скинути</button>
         </div>
       </div>
       <div class="text-center mt-5" *ngIf="isLoading">
         <div class="spinner-border text-primary" role="status">
-          <span class="visually-hidden">Loading...</span>
+          <span class="visually-hidden">Завантаження...</span>
         </div>
       </div>
       <div class="modal-body" *ngIf="!isLoading">
@@ -27,58 +27,58 @@
         </div>
         <form>
           <div class="mb-3">
-            <label for="firstName" class="form-label">First Name</label>
+            <label for="firstName" class="form-label">Ім'я</label>
             <input type="text" class="form-control" id="firstName" [(ngModel)]="employee.firstName"
                    name="firstName">
           </div>
           <div class="mb-3">
-            <label for="lastName" class="form-label">Last Name</label>
+            <label for="lastName" class="form-label">Прізвище</label>
             <input type="text" class="form-control" id="lastName" [(ngModel)]="employee.lastName"
                    name="lastName">
           </div>
           <div class="mb-3">
-            <label for="email" class="form-label">Email</label>
+            <label for="email" class="form-label">Електронна пошта</label>
             <input type="email" class="form-control" id="email" [disabled]="isOwn" [(ngModel)]="employee.email"
                    name="email">
           </div>
           <div class="mb-3">
-            <label for="birthDate" class="form-label">Birth Date</label>
-            <input type="date" class="form-control" id="birthDate" [(ngModel)]="employee.birthDate" name="birthDate">
+            <label for="birthDate" class="form-label">Дата народження</label>
+            <input type="text" class="form-control" id="birthDate" [(ngModel)]="employee.birthDate" name="birthDate" bsDatepicker>
           </div>
           <div class="mb-3">
-            <label for="positionName" class="form-label">Position</label>
+            <label for="positionName" class="form-label">Посада</label>
             <input type="text" class="form-control" id="positionName" [(ngModel)]="employee.positionName"
                    name="positionName">
           </div>
           <div class="mb-3">
-            <label for="departmentName" class="form-label">Department</label>
+            <label for="departmentName" class="form-label">Департамент</label>
             <input type="text" class="form-control" id="departmentName" [(ngModel)]="employee.departmentName"
                    name="departmentName">
           </div>
           <div class="mb-3">
-            <label for="salary" class="form-label">Salary</label>
+            <label for="salary" class="form-label">Зарплатня</label>
             <input type="number" class="form-control" id="salary" [(ngModel)]="employee.salary"
                    name="salary">
           </div>
           <div class="mb-3">
-            <label for="hireDate" class="form-label">Hire Date</label>
-            <input type="date" class="form-control" id="hireDate" [(ngModel)]="employee.hireDate" name="hireDate">
+            <label for="hireDate" class="form-label">Дата прийому на роботу</label>
+            <input type="text" class="form-control" id="hireDate" [(ngModel)]="employee.hireDate" name="hireDate" bsDatepicker>
           </div>
           <div class="mb-3" *ngIf="!isEditing">
-            <label for="password" class="form-label">Password</label>
+            <label for="password" class="form-label">Пароль</label>
             <input type="password" class="form-control" id="password" [(ngModel)]="password" name="password">
           </div>
           <div class="mb-3" *ngIf="!isEditing">
-            <label for="repeatPassword" class="form-label">Repeat Password</label>
+            <label for="repeatPassword" class="form-label">Повторення паролю</label>
             <input type="password" class="form-control" id="repeatPassword" [(ngModel)]="repeatPassword"
                    name="repeatPassword">
           </div>
         </form>
       </div>
       <div class="modal-footer" *ngIf="!isLoading">
-        <button type="button" class="btn btn-secondary" (click)="employeeEditModal.hide()">Cancel</button>
-        <button *ngIf="isEditing" type="button" class="btn btn-primary" (click)="onUpdate()">Update Employee</button>
-        <button *ngIf="!isEditing" type="button" class="btn btn-primary" (click)="onAdd()">Add Employee</button>
+        <button type="button" class="btn btn-secondary" (click)="employeeEditModal.hide()">Відмінити</button>
+        <button *ngIf="isEditing" type="button" class="btn btn-primary" (click)="onUpdate()">Редагувати робітника</button>
+        <button *ngIf="!isEditing" type="button" class="btn btn-primary" (click)="onAdd()">Додати робітника</button>
       </div>
     </div>
   </div>

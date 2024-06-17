@@ -42,7 +42,7 @@ export class MenuComponent implements OnInit, OnDestroy {
   private checkIsHr() {
     const authorities = this.tokenService.getAuthorities();
     this.isHr =
-      authorities.includes('System Administrator') ||
-      authorities.includes('HR Manager');
+      authorities.includes('Системний адміністратор') ||
+      authorities.includes('Менеджер з людських ресурсів');
   }
 }

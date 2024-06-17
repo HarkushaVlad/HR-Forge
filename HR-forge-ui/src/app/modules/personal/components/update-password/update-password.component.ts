@@ -35,7 +35,7 @@ export class UpdatePasswordComponent {
 
   onSubmit(): void {
     if (this.newPassword !== this.confirmPassword) {
-      this.errorMsg = ['New passwords do not match'];
+      this.errorMsg = ['Паролі не співпадають'];
       this.newPassword = '';
       this.confirmPassword = '';
       return;
@@ -70,7 +70,7 @@ export class UpdatePasswordComponent {
         });
     } else {
       if (!this.employeeId) {
-        this.errorMsg = ['No employee selected'];
+        this.errorMsg = ['Робітник не обраний'];
         return;
       }
 

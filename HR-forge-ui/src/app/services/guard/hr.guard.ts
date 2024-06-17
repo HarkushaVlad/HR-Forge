@@ -8,8 +8,8 @@ export const hrGuard: CanActivateFn = (route, state) => {
   const authorities = tokenService.getAuthorities();
 
   if (
-    authorities.includes('System Administrator') ||
-    authorities.includes('HR Manager')
+    authorities.includes('Системний адміністратор') ||
+    authorities.includes('Менеджер з людських ресурсів')
   ) {
     return true;
   } else {

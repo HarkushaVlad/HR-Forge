@@ -11,8 +11,9 @@ import lombok.Setter;
 @NoArgsConstructor
 public class PositionRequest {
 
-  @NotEmpty(message = "Position name is mandatory")
-  @NotBlank(message = "Position name is mandatory")
+  @NotEmpty(message = "Назва посади є обов'язковою")
+  @NotBlank(message = "Назва посади є обов'язковою")
   private String name;
+
   private String description;
 }
