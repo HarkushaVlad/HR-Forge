@@ -3,6 +3,7 @@ import { PersonalService } from '../../../../services/services/personal.service'
 import { EmployeeResponse } from '../../../../services/models/employee-response';
 import { PersonalRequest } from '../../../../services/models/personal-request';
 import { UpdatePasswordComponent } from '../../components/update-password/update-password.component';
+import { TokenService } from '../../../../services/token/token.service';
 
 @Component({
   selector: 'app-profile',
@@ -40,7 +41,10 @@ export class ProfileComponent implements OnInit {
   @ViewChild(UpdatePasswordComponent)
   updatePasswordComponent!: UpdatePasswordComponent;
 
-  constructor(private personalService: PersonalService) {}
+  constructor(
+    private personalService: PersonalService,
+    private tokenService: TokenService
+  ) {}
 
   ngOnInit(): void {
     this.personalService.getPersonal().subscribe({
@@ -95,6 +99,11 @@ export class ProfileComponent implements OnInit {
             this.fieldValue;
           this.editModal.hide();
           this.isLoading = false;
+
+          if (this.fieldName === 'Email') {
+            this.tokenService.removeToken();
+            window.location.reload();
+          }
         },
         error: (err) => {
           this.isLoading = false;
