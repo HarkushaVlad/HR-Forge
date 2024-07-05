@@ -36,6 +36,7 @@ cd HR-forge
 Create the necessary secret files in the `secrets/` directory:
 
 ```sh
+mkdir secrets
 cd secrets
 echo "your_database_name" > db_name.txt
 echo "your_database_user" > db_user.txt
