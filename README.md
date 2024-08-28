@@ -1,8 +1,7 @@
-# Human Resources Management System (HRMS)
+# HR-Forge (Human Resources Management System)
 
-## Overview
-
-This Human Resources Management System (HRMS) is designed to automate the accounting and management of human resources within an enterprise. The system aims to provide efficient personnel management, increase productivity, and reduce administrative costs. It includes functionalities for user authorization, data access restrictions and personnel data management. This project is a bachelor's degree qualification work.
+This web app is designed to automate human resources management. It handles user authorization and data access
+restrictions, including tracking employee information and handling various HR tasks.
 
 ## Technologies Used
 
@@ -73,7 +72,9 @@ To restore the database from the backup file, run the following command:
 ```sh
 docker exec -i postgres-db-hr-forge psql -U your_database_user -d your_database_name < database/backup.sql
 ```
-**Note:** The backup database contains a system administrator account with the login `myk.pav@example.com` and the password `qwerty09`. All accounts in the demo database use the password `qwerty09`.
+
+**Note:** The backup database contains a system administrator account with the login `myk.pav@example.com` and the
+password `qwerty09`. All accounts in the demo database use the password `qwerty09`.
 
 ### 6. Run the Backend
 
